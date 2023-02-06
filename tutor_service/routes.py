@@ -11,4 +11,5 @@ def login_page():
     return render_template('home.html')
 
 @app.route('test')
+def test_page():
     return render_template('test.html')    
