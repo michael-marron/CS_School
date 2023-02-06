@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        li {
+            display: inline;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block head %}{% endblock %}
+    <title>
+        {% block head %}{% endblock %}
+    </title>
+
 </head>
 <body>
+    <ul>
+        <li><a href="">TutorService</a></li>
+        <li><a href="">Home</a></li>
+        <li><a href="">Register</a></li>
+        <li><a href="">Login</a></li>
+    </ul>
+
     {% block body %}{% endblock %}
 </body>
 </html>
