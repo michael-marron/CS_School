@@ -6,6 +6,7 @@ from tutor_service.helper_functions import get_time_list, get_weekdays
 def home_page():
     return render_template('home.html')
 
+
 @app.route('/')
 @app.route('/calendar')
 def calendar_page():
