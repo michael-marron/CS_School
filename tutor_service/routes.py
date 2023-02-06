@@ -6,10 +6,6 @@ from flask import render_template, redirect, url_for, flash
 def home_page():
     return render_template('home.html')
 
-@app.route('/login')
-def login_page():
-    return render_template('home.html')
-
 @app.route('test')
 def test_page():
     return render_template('test.html')    
