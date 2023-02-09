@@ -17,4 +17,8 @@ def calendar_page():
 
 @app.route('/test')
 def test_page():
-    return render_template('home.html')    
+    return render_template('home.html')
+
+@app.route('/tutorPage')
+def tutor_page():
+    return render_template('tutorPage.html')
