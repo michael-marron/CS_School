@@ -1,4 +1,4 @@
-import calendar
+import calendar, tutorPage
 from datetime import datetime, timedelta, date
 
 def get_time_list(start, end):
@@ -10,19 +10,16 @@ def get_time_list(start, end):
         end_time = ""
         start_end_time = []
 
-        count = 0
-        for count in range(0,2):
+        for count in range(2):
             if x <= 12:
                 # for count in range(1,2):
-                    val = x
-                    start_time = f"{val}:00AM"
-                    end_time = f"{val}:25AM"
+                val = x
+                start_time = f"{val}:00AM"
+                end_time = f"{val}:25AM"
 
-                    if count == 1:
-                        start_time = f"{val}:30AM"
-                        end_time = f"{val}:55AM"
-                        count = 0
-
+                if count == 1:
+                    start_time = f"{val}:30AM"
+                    end_time = f"{val}:55AM"
 
                 # :00-:25
                 # :30-:55
@@ -34,8 +31,8 @@ def get_time_list(start, end):
             start_end_time.append(start_time)
             start_end_time.append(end_time)
             list_times.append(start_end_time)
-            count+=1
 
+    print(list_times, "\n")
     return list_times
 
 
