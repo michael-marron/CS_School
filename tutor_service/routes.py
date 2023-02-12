@@ -21,7 +21,7 @@ def test_page():
 
 @app.route('/tutorPage')
 def tutor_page():
-    total_cols = 28
+    total_cols = 7
     times = get_time_list(8,21)
     weekdays = get_weekdays()
-    return render_template('tutorPage.html', time = times, weekdays=weekdays, total_cols = total_cols)
+    return render_template('tutorPage.html', times = times, weekdays=weekdays, total_cols = total_cols)

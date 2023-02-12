@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62b52334-33b0-472e-8cf1-9ab69149e8a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tutor_service/style/tutorPage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/helper_functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/templates/calendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/calendar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -215,7 +217,9 @@
       <workItem from="1675700250168" duration="2182000" />
       <workItem from="1675963272321" duration="5347000" />
       <workItem from="1675973092706" duration="4896000" />
-      <workItem from="1676040284550" duration="988000" />
+      <workItem from="1676040284550" duration="7988000" />
+      <workItem from="1676216507099" duration="6852000" />
+      <workItem from="1676230150575" duration="7699000" />
     </task>
     <servers />
   </component>

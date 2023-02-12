@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block head %}
-Calendar Page
+Tutor Page
 {% endblock %}
 
 <!--
@@ -11,15 +11,20 @@ Calendar Page
 -->
 
 {% block body %}
-
+<div class="topnav">
+  <div class="topnav-right">
+    <a href="/home">Upcoming</a>
+  </div>
+</div>
 <style>
   table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
+    align-content: center;
   }
 
   td, th {
-    padding: 15px;
+    padding: 10px;
   }
 </style>
 
@@ -35,7 +40,7 @@ Calendar Page
       <th></th>
       <th></th>
       {% for day in weekdays %}
-      <th scope="col" colspan="4">{{ day }}</th>
+      <th scope="col" colspan="1">{{ day }}</th>
       {% endfor %}
     </tr>
     </thead>
@@ -46,21 +51,23 @@ Calendar Page
 
       {% for day in weekdays %}
 
-      <th scope="col">Student</th>
-      <th scope="col">Topic</th>
-      <th scope="col">Zoom Link</th>
-      <th scope="col">Spaces Available</th>
+      <th scope="col">Availablity</th>
 
       {% endfor %}
     </tr>
     {% for time in times %}
-    <tr>
+
+    <tr style="background-color:white;">
       <td>{{ time[0] }}</td>
       <td>{{ time[1] }}</td>
 
       {% for x in range(total_cols) %}
-      <td></td>
+
+      <form><td onclick = "changeColor('springgreen')"> </td> </form>
+
+
       {% endfor %}
+
 
     </tr>
     {% endfor %}
@@ -68,5 +75,15 @@ Calendar Page
 
   </table>
 </div>
+
+<script>
+  function changeColor(color) {
+    el = event.target //event.srcElement
+    if(el.style.backgroundColor != color)
+      el.style.backgroundColor = color;
+    else
+      el.style.backgroundColor = el.parentNode.style.backgroundColor;
+  }
+</script>
 
 {% endblock %}
