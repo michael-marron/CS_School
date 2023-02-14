@@ -1,6 +1,7 @@
 from tutor_service import app
-from flask import render_template, redirect, url_for, flash 
+from flask import render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays
+
 
 @app.route('/home')
 def home_page():
