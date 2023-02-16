@@ -24,6 +24,10 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 def index():
     return render_template('index.html')
 
+# test page
+@app.route('/test')
+def test():
+    return render_template('logsign.html')
 # login page
 @app.route('/login')
 def login():
@@ -39,15 +43,16 @@ def reg():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         
         username = request.form['username']
-        password = request.form['password']
         email = request.form['email']
+        password = request.form['password']
+        
    
-        print (username, email, password ) #check for input in dev stage
+       # print (username, email, password ) #check for input in dev stage
 
         hashedpass = generate_password_hash(password) #hask password before storing
 
         #Check if account exists 
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM userlist WHERE username = %s', (username,))
         account = cursor.fetchone()
         print(account) #show account in terminal
 
@@ -67,11 +72,15 @@ def reg():
             flash('Please fill out the information to register!')
         # create new acc if pass all checks
         else:
-            cursor.execute("INSERT INTO users (username, password, email) VALUES (%s,%s,%s)", (username, hashedpass, email))
+            cursor.execute("INSERT INTO userlist (username,email, pass) VALUES (%s,%s,%s)", (username, email, hashedpass))
             conn.commit()
             flash('You have successfully registered!')
+            print ("added")
 
-   
+    elif request.method == 'POST':
+        # Form is empty... (no POST data)
+        flash('Please fill out the form!')
+
     return render_template('reg.html')
 
 if __name__ == "__main__":
