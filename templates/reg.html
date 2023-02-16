@@ -1,51 +1,50 @@
 
-
   <!-- from tutorial101.blogspot.com --------------------------------------------------------------------------------->
 <!DOCTYPE html>
 <html>
  <head>
   <meta charset="utf-8">
   <title>Register</title>
-  <!-- <link  href="/static/css/reg.css" rel="stylesheet"> -->
+  <link  href="/static/css/reg.css" rel="stylesheet"> <!-- need to fix this -->
  <link  href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" rel="stylesheet">
 
   <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
  </head>
- <body style="background-color:#ccc;">
+ <body>
  <div class="container">
    <div class="row main">
     <div class="main-login main-center">
     <h5>Register new user account</h5>
-     <form action="{{ url_for('reg') }}" method="post" autocomplete="off"> 
+     <form action="/templates/reg.html" method="POST"> 
     
       <div class="form-group">
-       <label for="email" class="cols-sm-2 control-label">Your Email</label>
-       <div class="cols-sm-10">
+       <label for="email">Your Email</label>
+       <div>
         <div class="input-group">
-         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-         <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+         <span ><i aria-hidden="true"></i></span>
+         <input type="text" class="form-control" name="email" id="email" required/>
         </div>
        </div>
       </div>
   
       <div class="form-group">
        <label for="username" class="cols-sm-2 control-label">Username</label>
-       <div class="cols-sm-10">
+       <div>
         <div class="input-group">
          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-         <input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" required>
+         <input type="text" class="form-control" name="username" id="username" required>
         </div>
        </div>
       </div>
   
       <div class="form-group">
        <label for="password" class="cols-sm-2 control-label">Password</label>
-       <div class="cols-sm-10">
+       <div>
         <div class="input-group">
          <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-         <input type="password" class="form-control" name="pass" placeholder="Password" id="password" required  placeholder="Enter your Password"/>
+         <input type="password" class="form-control" name="pass" placeholder="Password" id="password" required />
         </div>
        </div>
       </div>
@@ -56,17 +55,20 @@
         {% for message in messages %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           {{ message }}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<!--           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">×</span>
-          </button>
+          </button> -->
         </div>
         {% endfor %}
         {% endif %}
         {% endwith %}
+
        <input type="submit" value="Register" class="form-control btn btn-primary " name="">
        <p style="padding:5px;">
       <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login"
         class="fw-bold text-body"><u>Login here</u></a></p>
+
+      
         
       </div>
         

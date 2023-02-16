@@ -27,7 +27,7 @@ def index():
 # test page
 @app.route('/test')
 def test():
-    return render_template('logsign.html')
+    return render_template('test.html')
 # login page
 @app.route('/login')
 def login():
@@ -46,8 +46,7 @@ def reg():
         email = request.form['email']
         password = request.form['password']
         
-   
-       # print (username, email, password ) #check for input in dev stage
+        print (username, email, password ) #check for input in dev stage
 
         hashedpass = generate_password_hash(password) #hask password before storing
 
@@ -62,7 +61,7 @@ def reg():
         if account:
             flash('Account already exists! Please log in.')
         # invalid email (using regular expression)
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+        elif not re.match(r'[^@]+@ufl.edu', email):
             flash('Invalid email address!')
         # invalid username (only accept numbers and chars)
         elif not re.match(r'[A-Za-z0-9]+', username):
@@ -77,9 +76,6 @@ def reg():
             flash('You have successfully registered!')
             print ("added")
 
-    elif request.method == 'POST':
-        # Form is empty... (no POST data)
-        flash('Please fill out the form!')
 
     return render_template('reg.html')
 
