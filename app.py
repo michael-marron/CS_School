@@ -35,7 +35,7 @@ def reg():
     # bound to the db
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
  
-    # Check if input POST requests exist
+    # Check if input POST requests
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         
         username = request.form['username']
@@ -49,7 +49,7 @@ def reg():
         #Check if account exists 
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
-        print(account) #show account in terminal 
+        print(account) #show account in terminal
 
         # message prompt after input
 
