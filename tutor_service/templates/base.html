@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +10,24 @@
 
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
+            
+            background-color: #0021A5;
+            overflow: hidden;
         }
         li {
-            display: inline;
+            float: left;
+        }
+        li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px;
+        }
+        li a:hover {
+            background-color: #FA4616;
         }
     </style>
 
@@ -25,12 +40,14 @@
 </head>
 <body>
     <ul>
-        <li><a href="">TutorService</a></li>
-        <li><a href="">Home</a></li>
-        <li><a href="">Register</a></li>
-        <li><a href="">Login</a></li>
+        <li><a href="{{ url_for('calendar_page') }}">TutorService</a></li>
+        <li><a href="{{ url_for('home_page') }}">Home</a></li>
+        <li style="float:right"><a href="">Register</a></li>
+        <li style="float:right"><a href="">Login</a></li>
     </ul>
+    <br>
 
     {% block body %}{% endblock %}
 </body>
+
 </html>
