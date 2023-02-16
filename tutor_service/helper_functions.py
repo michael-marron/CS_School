@@ -13,7 +13,6 @@ def get_time_list(start, end):
 
         for count in range(2):
             if x <= 12:
-                print("HERE in x<=12", " x = ", x)
                 val = x
                 if count == 0:
                     start_time = f"{val}:00AM"
@@ -25,17 +24,20 @@ def get_time_list(start, end):
 
             else:
                 val = x - 12
-                start_time = f"{val}:00PM - {val}:25PM"
-                end_time = f"{val}:30PM - {val}:55PM"
+                if count == 0:
+                    start_time = f"{val}:00PM"
+                    end_time = f"{val}:25PM"
+
+                else:
+                    start_time = f"{val}:30PM"
+                    end_time = f"{val}:55PM"
+
             start_end_time.clear()
             start_end_time.append(start_time)
             start_end_time.append(end_time)
-            print("START-END: ", start_end_time)
-            list_times.append(start_end_time)
-            print("LIST: ", list_times)
+            list_times.append(start_end_time[:])
 
 
-    print("PRINTING LIST: ",list_times, "\n")
     return list_times
 
 

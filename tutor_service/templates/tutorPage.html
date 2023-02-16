@@ -21,6 +21,7 @@ Tutor Page
     border: 1px solid black;
     border-collapse: collapse;
     align-content: center;
+    background-color: white;
   }
 
   td, th {
@@ -30,7 +31,11 @@ Tutor Page
 
 <div>
   <h1>Tutor Schedule</h1>
-  <table>
+  <button type="button">Save Schedule</button>
+  <button onclick="refreshBackground()">Refresh Schedule</button>
+
+
+  <table id ="schedule">
     <thead>
     <tr>
       <!--
@@ -51,7 +56,7 @@ Tutor Page
 
       {% for day in weekdays %}
 
-      <th scope="col">Availablity</th>
+      <th scope="col">Available</th>
 
       {% endfor %}
     </tr>
@@ -83,6 +88,15 @@ Tutor Page
       el.style.backgroundColor = color;
     else
       el.style.backgroundColor = el.parentNode.style.backgroundColor;
+  }
+
+  function refreshBackground() {
+    el = event.target //event.srcElement
+    var s = document.getElementById("schedule");
+    s.style.backgroundColor = "blue";
+
+    // el.table.td.backgroundColor = white;
+
   }
 </script>
 
