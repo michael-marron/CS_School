@@ -32,61 +32,65 @@
   
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
   
-                  <form class="mx-1 mx-md-4" action="{{ url_for('register') }}" method="post" autocomplete="off">
+                  <form class="mx-1 mx-md-4" action="{{ url_for('register') }}" method="POST" autocomplete="off">
                    
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">  
-                        <label class="form-label" for="email">Your Email</label>
-                        <input type="text" class="form-control" name="email" id="email" required/>
+                    <div class="form-group">
+                      <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                      <div class="cols-sm-10">
+                       <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
                        </div>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                         <label class="form-label" for="username">Your Name</label>
-                         <input type="text" id="username" class="form-control" required/>
-                       
                       </div>
-                    </div>
-  
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                         <label class="form-label" for="password">Password</label>
-                         <input type="password" class="form-control" name="password" placeholder="Password" id="password" required>                     
+                     </div>
+                 
+                     <div class="form-group">
+                      <label for="username" class="cols-sm-2 control-label">Username</label>
+                      <div class="cols-sm-10">
+                       <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" required>
+                       </div>
                       </div>
-                    </div>
-  
-                    <!-- display alert message -->
-                    <div class="form-group ">
-                      {% with messages = get_flashed_messages()  %}
-                      {% if messages %}
-                      {% for message in messages %}
-                      <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                        </button>
+                     </div>
+                 
+                     <div class="form-group">
+                      <label for="password" class="cols-sm-2 control-label">Password</label>
+                      <div class="cols-sm-10">
+                       <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Enter your Password"/>
+                       </div>
                       </div>
-                      {% endfor %}
-                      {% endif %}
-                      {% endwith %}
+                     </div>
+                 
+                     <div class="form-group ">
+                       {% with messages = get_flashed_messages()  %}
+                       {% if messages %}
+                       {% for message in messages %}
+                       <div class="alert alert-success alert-dismissible fade show" role="alert">
+                         {{ message }}
+                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">×</span>
+                         </button>
+                       </div>
+                       {% endfor %}
+                       {% endif %}
+                       {% endwith %}
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <input type="submit" value="Register" class="form-control btn btn-primary btn-lg" name="">
                     </div>
   
-                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login"
-                    class="fw-bold text-body"><u>Login here</u></a></p>
+                    <p class="text-center text-muted mt-5 mb-0">Have already an account? 
+                      <a href="/login" class="fw-bold text-body">
+                        <u>Login here</u>
+                      </a>
+                    </p>
                   </form>
   
                 </div>
-                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-  
-  
-                </div>
+
               </div>
             </div>
           </div>

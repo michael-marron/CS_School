@@ -49,14 +49,14 @@ def register():
         email = request.form['email']
         password = request.form['password']
         
-        print (username, email, password ) #check for input in dev stage
+        print ("user: ", username, email ) #check for input in dev stage
 
         hashedpass = generate_password_hash(password) #hask password before storing
 
         #Check if account exists 
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
         account = cursor.fetchone()
-        print(account) #show account in terminal
+    
 
         # message prompt after input
 
@@ -66,9 +66,11 @@ def register():
         # invalid email (using regular expression)
         elif not re.match(r'[^@]+@ufl.edu', email):
             flash('Invalid email address!')
+            print ("invalid email")
         # invalid username (only accept numbers and chars)
         elif not re.match(r'[A-Za-z0-9]+', username):
             flash('Invalid!\nUsername must contain only characters and numbers')
+            print ("invalid pass")
         # not enough input
         elif not username or not password or not email:
             flash('Please fill out the information to register!')
@@ -79,8 +81,8 @@ def register():
             flash('You have successfully registered!')
             print ("added")
 
-    elif request.method == 'POST': #require user input
-        flash('Please fill out the form!')
+    #elif request.method == 'POST': #require user input
+     #   flash('Please fill out the form!')
 
     print ("Done!!!")
 
