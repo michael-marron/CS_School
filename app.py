@@ -29,10 +29,44 @@ def index():
 @app.route('/test')
 def test():
     return render_template('test.html')
+
 # login page
 @app.route('/login')
 def login():
-    return render_template('login.html')
+
+    print("------ in login")
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) #bound to the db
+   
+    # get user input
+    if 'email' in request.form and 'password' in request.form and  request.method == 'POST':
+        inputEmail = request.form['email']
+        inputPass = request.form['password']
+ 
+        # get rows from db to match with user input
+        cursor.execute('SELECT * FROM users WHERE email = %s', (inputEmail,)) # keep comma behind email as its a tuple
+        dbAcc = cursor.fetchone()
+ 
+        if dbAcc:
+            print(inputEmail)
+
+            # hashed and input pass match:
+            if check_password_hash(dbAcc['password'], inputPass):
+                # get session data for later use
+                session['loggedin'] = True
+                session['id'] = ['id']
+                session['email'] = dbAcc['email']
+
+                # load main page for user with vallid credentials
+                return redirect('/index.html')
+            
+            # if hashed match but email does not ( do not let user know whether pass or email does not match, for security reason)
+            else:
+                flash('Incorrect username/password')  #send message with flash, combine with get_flash_message in html
+        else:
+            # inputs do not match any attribute in the db
+            flash('Incorrect username/password')
+   
+    return render_template('login.html') #return the login template with appropreate message
 
 # register
 @app.route('/register', methods=['GET', 'POST'])
@@ -43,7 +77,7 @@ def register():
     print ("in register")
 
     # Check if input POST requests
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+    if 'username' in request.form and 'password' in request.form and 'email' in request.form and  request.method == 'POST':
         
         username = request.form['username']
         email = request.form['email']
@@ -85,6 +119,7 @@ def register():
     print ("Done!!!")
 
     return render_template('register.html') #return the template with appropreate alert
+
 
 if __name__ == "__main__":
     app.run(debug=True)

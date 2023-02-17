@@ -13,9 +13,6 @@
 
 <link href="/static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-
-
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -69,28 +66,44 @@
       }
     </style>
 
-    
-    <!-- Custom styles for this template -->
     <link href="/static/css/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
     
 <main class="form-signin w-100 m-auto">
-  <form>
+
+  <form class="mx-1 mx-md-4" action="{{ url_for('login') }}" method="post">
+   
     <h1 class="h3 mb-3 fw-normal">Sign in</h1>
 
+    <!-- email input -->  
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@ufl.edu">
       <label for="floatingInput">Email address</label>
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@ufl.edu">
     </div>
+
+    <!-- password -->  
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
     </div>
+
+    {% with messages = get_flashed_messages()  %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
-    <!--create  new account -->
+    <!-- new acc sign up link -->
     <p class="text-center text-muted mt-5 mb-0">Don't have an account? 
       <a class="text-body" href="/register">
         <u>Sign up here</u>
@@ -101,7 +114,6 @@
 </form>
 </main>
 
+</body>
 
-    
-  </body>
 </html>
