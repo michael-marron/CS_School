@@ -30,24 +30,24 @@ def index():
 def test():
     return render_template('test.html')
 
-# register
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+# create account
+@app.route('/create/', methods=[ 'POST','GET'])
+def create():
     # bound to the db during the registration
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
     
-    print ("in register")
+    print ("in create")
 
     # Check if input POST requests
     if 'username' in request.form and 'password' in request.form and 'email' in request.form and  request.method == 'POST':
         
         username = request.form['username']
         email = request.form['email']
-        password = request.form['password']
+        pwd = request.form['password']
         
         print ("user: ", username, email ) #check for input in dev stage
 
-        hashedpass = generate_password_hash(password) #hask password before storing
+        
 
         #Check if account exists 
         cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
@@ -58,67 +58,63 @@ def register():
 
         # existing acc:
         if account:
-            flash('Account already exists! Please log in.')
+            flash('Your account already exists! Please log in.')
         # invalid email (using regular expression)
-        elif not re.match(r'[^@]+@ufl.edu', email):
-            flash('Invalid email address!')
+        elif not re.match(r'[^@]+@+[^@]+.edu', email):
+            flash('Please sign up with a .edu email address!')
             print ("---invalid email")
         # invalid username (only accept numbers and chars)
         elif not re.match(r'[A-Za-z0-9]+', username):
-            flash('Invalid!\nUsername must contain only characters and numbers')
-            print ("invalid pass")
-        # not enough input
-        elif not username or not password or not email:
-            flash('Please fill out the information to register!')
-        # create new acc if pass all checks
+            flash('Only accpet characters and numbers for username!')
+            print ("invalid name")
+        # password requirement
+        elif not re.match(r'[A-Za-z0-9]+', pwd):
+            flash('Only accpet characters and numbers for username!')
+            print ("invalid name")
+
+        # create new acc in db if pass all checks, hask the pass before passing in
         else:
-            cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", ( email,username,hashedpass))
+            cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", ( email,username,generate_password_hash(pwd)))
             conn.commit()
-            flash('You have successfully registered!')
+            flash('Account is successfully created!')
             print ("added")
 
+    return render_template('create.html') #return the template with appropreate alert
 
-    print ("Done!!!")
-
-    return render_template('register.html') #return the template with appropreate alert
-
-@app.route('/login/', methods=['GET', 'POST'])
-def login():
+# log in
+@app.route('/signin/', methods=['GET', 'POST'])
+def signin():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
    
     # Check if "username" and "password" POST requests exist (user submitted form)
     if 'email' in request.form and 'password' in request.form and request.method == 'POST':
         email= request.form['email']
-        password = request.form['password']
+        pwd = request.form['password']
         print("in log in function")
  
         # fetch row in db
         cursor.execute('SELECT * FROM users WHERE email = %s', (email,)) # comma for tuples
-        account = cursor.fetchone()
+        acc = cursor.fetchone()
         print ("fetch db row")
  
-        if account:
-            password_rs = account['password']
-         
+        if acc:         
             # If account exists in users table in out database
-            if check_password_hash(password_rs, password):
+            if check_password_hash(acc['password'], pwd):
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
-                session['id'] = account['id']
-                session['email'] = account['email']
+                session['id'] = acc['id']
+                session['email'] = acc['email']
                 # Redirect to home page
                 return redirect(url_for('index'))
             else:
-                # Account doesnt exist or username/password incorrect
+                # username/password wrong
                 flash('Incorrect email/password')
+                print ("----wrong pass")
         else:
-            # Account doesnt exist or username/password incorrect
-            flash('Incorrect email/password')
- 
-    else: 
-        print ("input???")
+            # no acc found
+            flash('No account found! Please create a new account.')
 
-    return render_template('login.html')
+    return render_template('signin.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

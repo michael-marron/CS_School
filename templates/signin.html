@@ -80,7 +80,7 @@
   
                   <p class="text-center h1 mb-5 mx-1 mx-md-4 mt-4">Sign in</p>
 
-  <form class="mx-1 mx-md-4" action="{{ url_for('login') }}" method="post"  autocomplete="off">
+  <form class="mx-1 mx-md-4" action="{{ url_for('signin') }}" method="post"  autocomplete="off">
      
     <!-- email input -->
     <div class="form-group">
@@ -121,12 +121,12 @@
 
 
      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-      <input type="submit" value="Signin" class="form-control btn btn-primary btn-lg" name="">
+      <input type="submit" value="Sign in" class="form-control btn btn-primary btn-lg" name="">
     </div>
 
     <!-- new acc sign up link -->
     <p class="text-center text-muted mt-5 mb-0">Don't have an account? 
-      <a class="text-body" href="/register">
+      <a class="text-body" href="/create">
         <u>Sign up here</u>
       </a>
     </p>
