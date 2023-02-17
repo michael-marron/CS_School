@@ -10,6 +10,7 @@ import re, os # use regular expression to check for valid email and username
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.secret_key = 'sosecret'
 
 #connect to DB
 
@@ -34,8 +35,8 @@ def login():
     return render_template('login.html')
 
 # register
-@app.route('/reg', methods=['GET', 'POST'])
-def reg():
+@app.route('/register', methods=['GET', 'POST'])
+def register():
     # bound to the db during the registration
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
     
@@ -81,7 +82,9 @@ def reg():
     elif request.method == 'POST': #require user input
         flash('Please fill out the form!')
 
-    return render_template('reg.html') #return the template with appropreate alert
+    print ("Done!!!")
+
+    return render_template('register.html') #return the template with appropreate alert
 
 if __name__ == "__main__":
     app.run(debug=True)
