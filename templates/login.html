@@ -80,7 +80,7 @@
   
                   <p class="text-center h1 mb-5 mx-1 mx-md-4 mt-4">Sign in</p>
 
-  <form class="mx-1 mx-md-4" action="{{ url_for('login') }}" method="post">
+  <form class="mx-1 mx-md-4" action="{{ url_for('login') }}" method="post"  autocomplete="off">
      
     <!-- email input -->
     <div class="form-group">
@@ -88,7 +88,7 @@
       <div class="cols-sm-10">
        <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-        <input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+        <input type="email" class="form-control" name="email" id="email"  required placeholder="name@ufl.edu"/>
        </div>
       </div>
      </div>
@@ -99,7 +99,7 @@
       <div class="cols-sm-10">
        <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-        <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Enter your Password"/>
+        <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Your Password"/>
        </div>
       </div>
      </div>
@@ -120,7 +120,9 @@
      </div>
 
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+      <input type="submit" value="Signin" class="form-control btn btn-primary btn-lg" name="">
+    </div>
 
     <!-- new acc sign up link -->
     <p class="text-center text-muted mt-5 mb-0">Don't have an account? 

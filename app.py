@@ -30,44 +30,6 @@ def index():
 def test():
     return render_template('test.html')
 
-# login page
-@app.route('/login')
-def login():
-
-    print("------ in login")
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) #bound to the db
-   
-    # get user input
-    if 'email' in request.form and 'password' in request.form and  request.method == 'POST':
-        inputEmail = request.form['email']
-        inputPass = request.form['password']
- 
-        # get rows from db to match with user input
-        cursor.execute('SELECT * FROM users WHERE email = %s', (inputEmail,)) # keep comma behind email as its a tuple
-        dbAcc = cursor.fetchone()
- 
-        if dbAcc:
-            print(inputEmail)
-
-            # hashed and input pass match:
-            if check_password_hash(dbAcc['password'], inputPass):
-                # get session data for later use
-                session['loggedin'] = True
-                session['id'] = ['id']
-                session['email'] = dbAcc['email']
-
-                # load main page for user with vallid credentials
-                return redirect('/index.html')
-            
-            # if hashed match but email does not ( do not let user know whether pass or email does not match, for security reason)
-            else:
-                flash('Incorrect username/password')  #send message with flash, combine with get_flash_message in html
-        else:
-            # inputs do not match any attribute in the db
-            flash('Incorrect username/password')
-   
-    return render_template('login.html') #return the login template with appropreate message
-
 # register
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -110,7 +72,7 @@ def register():
             flash('Please fill out the information to register!')
         # create new acc if pass all checks
         else:
-            cursor.execute("INSERT INTO users (email,username, pass) VALUES (%s,%s,%s)", ( email,username,hashedpass))
+            cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", ( email,username,hashedpass))
             conn.commit()
             flash('You have successfully registered!')
             print ("added")
@@ -120,6 +82,43 @@ def register():
 
     return render_template('register.html') #return the template with appropreate alert
 
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+   
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if 'email' in request.form and 'password' in request.form and request.method == 'POST':
+        email= request.form['email']
+        password = request.form['password']
+        print("in log in function")
+ 
+        # fetch row in db
+        cursor.execute('SELECT * FROM users WHERE email = %s', (email,)) # comma for tuples
+        account = cursor.fetchone()
+        print ("fetch db row")
+ 
+        if account:
+            password_rs = account['password']
+         
+            # If account exists in users table in out database
+            if check_password_hash(password_rs, password):
+                # Create session data, we can access this data in other routes
+                session['loggedin'] = True
+                session['id'] = account['id']
+                session['email'] = account['email']
+                # Redirect to home page
+                return redirect(url_for('index'))
+            else:
+                # Account doesnt exist or username/password incorrect
+                flash('Incorrect email/password')
+        else:
+            # Account doesnt exist or username/password incorrect
+            flash('Incorrect email/password')
+ 
+    else: 
+        print ("input???")
+
+    return render_template('login.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
