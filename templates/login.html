@@ -75,31 +75,44 @@
   <form class="mx-1 mx-md-4" action="{{ url_for('login') }}" method="post">
    
     <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+  
+    <!-- email input -->
+    <div class="form-group">
+      <label for="email" class="cols-sm-2 control-label">Your Email</label>
+      <div class="cols-sm-10">
+       <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+        <input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+       </div>
+      </div>
+     </div>
 
-    <!-- email input -->  
-    <div class="form-floating">
-      <label for="floatingInput">Email address</label>
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@ufl.edu">
-    </div>
+     <!-- password input -->
+     <div class="form-group">
+      <label for="password" class="cols-sm-2 control-label">Password</label>
+      <div class="cols-sm-10">
+       <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+        <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Enter your Password"/>
+       </div>
+      </div>
+     </div>
 
-    <!-- password -->  
-    <div class="form-floating">
-      <label for="floatingPassword">Password</label>
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-    </div>
+     <div class="form-group ">
+      {% with messages = get_flashed_messages()  %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+     </div>
 
-    {% with messages = get_flashed_messages()  %}
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
