@@ -35,7 +35,7 @@ def login():
 
 # register
 @app.route('/reg', methods=['GET', 'POST'])
-def reg(request):
+def reg():
     # bound to the db during the registration
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
     
@@ -53,7 +53,7 @@ def reg(request):
         hashedpass = generate_password_hash(password) #hask password before storing
 
         #Check if account exists 
-        cursor.execute('SELECT * FROM userlist WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
         print(account) #show account in terminal
 
@@ -73,7 +73,7 @@ def reg(request):
             flash('Please fill out the information to register!')
         # create new acc if pass all checks
         else:
-            cursor.execute("INSERT INTO userlist (username,email, pass) VALUES (%s,%s,%s)", (username, email, hashedpass))
+            cursor.execute("INSERT INTO users (email,username, pass) VALUES (%s,%s,%s)", ( email,username,hashedpass))
             conn.commit()
             flash('You have successfully registered!')
             print ("added")
