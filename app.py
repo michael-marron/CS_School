@@ -66,7 +66,7 @@ def register():
         # invalid email (using regular expression)
         elif not re.match(r'[^@]+@ufl.edu', email):
             flash('Invalid email address!')
-            print ("invalid email")
+            print ("---invalid email")
         # invalid username (only accept numbers and chars)
         elif not re.match(r'[A-Za-z0-9]+', username):
             flash('Invalid!\nUsername must contain only characters and numbers')
@@ -81,8 +81,6 @@ def register():
             flash('You have successfully registered!')
             print ("added")
 
-    #elif request.method == 'POST': #require user input
-     #   flash('Please fill out the form!')
 
     print ("Done!!!")
 
