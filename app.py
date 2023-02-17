@@ -35,10 +35,12 @@ def login():
 
 # register
 @app.route('/reg', methods=['GET', 'POST'])
-def reg():
-    # bound to the db
+def reg(request):
+    # bound to the db during the registration
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
- 
+    
+    print ("in register")
+
     # Check if input POST requests
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         
@@ -76,8 +78,10 @@ def reg():
             flash('You have successfully registered!')
             print ("added")
 
+    elif request.method == 'POST': #require user input
+        flash('Please fill out the form!')
 
-    return render_template('reg.html')
+    return render_template('reg.html') #return the template with appropreate alert
 
 if __name__ == "__main__":
     app.run(debug=True)
