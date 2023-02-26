@@ -37,4 +37,3 @@ def get_weekdays():
         dates_list.append(day_string)
 
     return dates_list    
-

@@ -40,3 +40,9 @@ def test_calendar_loads_2(client):
     '''
     response = client.get("/calendar")
     assert b"Tuesday" in response.data
+
+
+#-------------------------------------------------------
+#@pytest.fixture(scope='function')
+def test_take_screenshot():
+    pass
