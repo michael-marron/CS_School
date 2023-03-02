@@ -9,14 +9,13 @@ from flask import Flask, request, session, redirect, url_for, render_template, f
 import psycopg2,psycopg2.extras
 import re, os # use regular expression to check for valid email and username
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-
-
+from .app_roles import app_roles
 
 app = Flask(__name__)
+
 app.secret_key = 'sosecret'
 
+app.register_blueprint(app_roles, url_prefix="")
 #connect to DB
 DB_HOST = "localhost"
 DB_NAME = "login"
@@ -28,6 +27,10 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 @app.route('/')
 def index():
     return render_template('index.html')
+
+#app for roles
+
+
 
 # register
 @app.route('/register', methods=['GET', 'POST'])
