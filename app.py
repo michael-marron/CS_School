@@ -44,16 +44,13 @@ def register():
         
         print ("user: ", username, email ) #check for input in dev stage
 
-        hashedpass = generate_password_hash(password,"pbkdf2:sha256",64) #hask password before storing
+        hashedpass = generate_password_hash(password,"pbkdf2:sha256",64) #hask password , salt 64 bits
 
-        #Check if account exists 
-        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
+        #Check if account exists, use cursor.fetchon to get each row in the table
+        cursor.execute('SELECT * FROM users WHERE email = %s', (email,)) # keep this comma
         account = cursor.fetchone()
-    
 
-        # message prompt after input
-
-        # existing acc:
+        # existing acc
         if account:
             flash('Account already exists! Please log in.')
         # invalid email (.re is regular expression)
@@ -63,8 +60,11 @@ def register():
         # invalid username (only accept numbers and chars)
         elif not re.match(r'[A-Za-z0-9]+', username):
             flash('Invalid!\nUsername must contain only characters and numbers')
-            print ("invalid pass")
-
+            print ("---invalid pass")
+        # check password strength
+        elif not re.match(r'^.{8,}$', password):
+            flash("At least 8 characters for password!")
+        # confirm password before signing up
         elif password != confirmpass:
             flash('Passwords do not match!')
             
@@ -88,6 +88,7 @@ def register():
 def reset():
     return render_template('reset.html')
 
+#log in
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
