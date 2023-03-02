@@ -59,17 +59,16 @@ def register():
         # existing acc:
         if account:
             flash('Account already exists! Please log in.')
-        # invalid email (using regular expression)
-        elif not re.match(r'[^@]+@ufl.edu', email):
-            flash('Invalid email address!')
+        # invalid email (.re is regular expression)
+        elif not re.match(r'[^@]+@+[A-Za-z0-9]+.edu', email):
+            flash('Invalid email address! Only use .edu email to register!')
             print ("---invalid email")
         # invalid username (only accept numbers and chars)
         elif not re.match(r'[A-Za-z0-9]+', username):
             flash('Invalid!\nUsername must contain only characters and numbers')
             print ("invalid pass")
-        # not enough input
-        elif not username or not password or not email:
-            flash('Please fill out the information to register!')
+
+
         # create new acc if pass all checks
         else:
             cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", ( email,username,hashedpass))
