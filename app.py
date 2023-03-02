@@ -39,11 +39,12 @@ def register():
     print ("in register")
 
     # Check if input POST requests
-    if 'username' in request.form and 'password' in request.form and 'email' in request.form and  request.method == 'POST':
+    if 'username' in request.form and 'password' in request.form and 'email' in request.form and  request.method == 'POST' and 'confirmpass' in request.form:
         
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        confirmpass= request.form['confirmpass']
         
         print ("user: ", username, email ) #check for input in dev stage
 
@@ -68,7 +69,12 @@ def register():
             flash('Invalid!\nUsername must contain only characters and numbers')
             print ("invalid pass")
 
-
+        elif password != confirmpass:
+            flash('Passwords do not match!')
+            
+        # not enough input
+       # elif not username or not password or not email:
+        #    flash('Please fill out the information to register!')
         # create new acc if pass all checks
         else:
             cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", ( email,username,hashedpass))
