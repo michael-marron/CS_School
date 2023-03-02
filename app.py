@@ -2,12 +2,13 @@
 #from: codemy.com https://www.youtube.com/watch?v=bxyaJ8w_wak
 #from: frecodecamp.org https://www.youtube.com/watch?v=Qr4QMBUPxWo https://github.com/jimdevops19/FlaskSeries
 #From: https://tutorial101.blogspot.com/2021/04/python-flask-postgresql-login-register.html
+#from: https://pydoc.dev/werkzeug/latest/werkzeug.security.html
 
 
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 import psycopg2,psycopg2.extras
 import re, os # use regular expression to check for valid email and username
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash, gen_salt
 
 app = Flask(__name__)
 app.secret_key = 'sosecret'
@@ -24,11 +25,6 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 @app.route('/')
 def index():
     return render_template('index.html')
-
-# test page
-@app.route('/test')
-def test():
-    return render_template('test.html')
 
 # register
 @app.route('/register', methods=['GET', 'POST'])
@@ -86,6 +82,11 @@ def register():
     print ("Done!!!")
 
     return render_template('register.html') #return the template with appropreate alert
+
+# reset pass
+@app.route('/reset')
+def reset():
+    return render_template('reset.html')
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
