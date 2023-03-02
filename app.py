@@ -8,13 +8,16 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 import psycopg2,psycopg2.extras
 import re, os # use regular expression to check for valid email and username
-from werkzeug.security import generate_password_hash, check_password_hash, gen_salt
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+
 
 app = Flask(__name__)
 app.secret_key = 'sosecret'
 
 #connect to DB
-
 DB_HOST = "localhost"
 DB_NAME = "login"
 DB_USER = "postgres"
@@ -68,10 +71,6 @@ def register():
         elif password != confirmpass:
             flash('Passwords do not match!')
             
-        # not enough input
-       # elif not username or not password or not email:
-        #    flash('Please fill out the information to register!')
-        # create new acc if pass all checks
         else:
             cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", ( email,username,hashedpass))
             conn.commit()
