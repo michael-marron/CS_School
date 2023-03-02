@@ -44,7 +44,7 @@ def register():
         
         print ("user: ", username, email ) #check for input in dev stage
 
-        hashedpass = generate_password_hash(password) #hask password before storing
+        hashedpass = generate_password_hash(password,"pbkdf2:sha256",64) #hask password before storing
 
         #Check if account exists 
         cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
