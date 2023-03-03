@@ -1,15 +1,10 @@
-from tutor_service import app
 from flask import render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
 
 
-@app.route('/home')
 def home_page():
     return render_template('home.html')
 
-
-@app.route('/')
-@app.route('/calendar')
 def calendar_page():
     times = get_time_list(start=8, end=21)
     weekdays = get_weekdays()
@@ -19,6 +14,6 @@ def calendar_page():
     #total_cols = len(weekdays) * num_cols_per_day
     return render_template('calendar.html', times=times, weekdays=weekdays, total_cols=total_cols, cols_list=cols_list)    
 
-@app.route('/test')
 def test_page():
     return render_template('home.html')    
+
