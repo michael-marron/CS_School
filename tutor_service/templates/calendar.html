@@ -24,7 +24,19 @@
 </style>
 
 <div>
+    <br>
+
     <h1>Tutor Calendar</h1>
+    
+    
+    {% include 'includes/confirm_modal.html' %}
+
+    <!--
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Confirm-Modal">
+        Confirm
+    </button>
+    -->
+
     <table>
         <thead>
             <tr>
@@ -35,7 +47,7 @@
             <th></th>
             <th></th>
             {% for day in weekdays %}
-            <th scope="col" colspan="4">{{ day }}</th>
+            <th scope="col" colspan="5">{{ day }}</th>
             {% endfor %}
             </tr>
         </thead>
@@ -46,20 +58,43 @@
                 
                 {% for day in weekdays %}
                 
-                <th scope="col">Tutor</th>
-                <th scope="col">Tutor Topic</th>
-                <th scope="col">Zoom Link</th>
-                <th scope="col">Spaces Available</th>
-        
+                    {% for col_data in cols_list %}
+                        <th scope="col">{{ col_data }}</th>
+                    {% endfor %}
+
                 {% endfor %}
             </tr>
             {% for time in times %} 
             <tr>
                 <td>{{ time[0] }}</td>
                 <td>{{ time[1] }}</td>
+                
+                {% for x in total_cols %}
+                    {% if time[0] == "10:00AM - 10:25AM" %}
+                        {% if x == "Tutor" %}
+                            <td>John</td>
+                        {% endif %}     
+                        
+                        {% if x == "Tutor Service" %}
+                            <td>Computer Science</td>
+                        {% endif %}
+                        
+                        {% if x == "Zoom Link" %}
+                            <td>https:zoom.com</td>
+                        {% endif %}
+                        
+                        {% if x == "Spaces Available" %}
+                            <td>2/3</td>
+                        {% endif %}
+                        {% if x == "Confirm" %}  
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Confirm-Modal">
+                                Confirm
+                            </button></td>
+                        {% endif %}                 
+                    {% else %}
+                        <td></td>
+                    {% endif %}
 
-                {% for x in range(total_cols) %}
-                <td></td>
                 {% endfor %}
                 
             </tr>

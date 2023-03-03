@@ -38,3 +38,17 @@ def get_weekdays():
 
     return dates_list    
 
+def get_columns(*args):
+    col_list = []
+    for x in args:
+        col_list.append(x)
+    
+    return col_list    
+
+def create_column_list(col_list, num_days):
+    all_cols_list = []
+    for x in range(num_days):
+        for y in col_list:
+            all_cols_list.append(y)
+
+    return all_cols_list        
