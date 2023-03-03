@@ -3,6 +3,8 @@
 {% block head %}
 Tutor Page
 {% endblock %}
+<link rel="stylesheet" href="style/tutorPage.css">
+var tutorSchedule = new Array();
 
 <!--
     Table Row (tr)
@@ -11,11 +13,7 @@ Tutor Page
 -->
 
 {% block body %}
-<div class="topnav">
-  <div class="topnav-right">
-    <a href="/home">Upcoming</a>
-  </div>
-</div>
+
 <style>
   table, th, td {
     border: 1px solid black;
@@ -27,13 +25,47 @@ Tutor Page
   td, th {
     padding: 10px;
   }
+  .popup {
+    position: relative;
+    display: inline-block;
+  }
+
+  .popup .popuptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  .popup .show {
+    visibility: visible;
+    /*-webkit-animation: fadeIn 1s;*/
+    animation: fadeIn 1s
+  }
+  /*@-webkit-keyframes fadeIn {*/
+  /*  from {opacity: 0;}*/
+  /*  to {opacity: 1;}*/
+  /*}*/
+
 </style>
 
-<div>
-  <h1>Tutor Schedule</h1>
-  <button type="button">Save Schedule</button>
-  <button onclick="refreshBackground()">Refresh Schedule</button>
+<h1>Tutor Schedule</h1>
 
+<div class = "popup" >
+  <button type="button" onclick="popUp()">Save Schedule</button>
+  <span class="popuptext" id="myPopup">Schedule saved!</span>
+</div>
+
+<button onclick="refreshBackground()">Refresh Schedule</button>
+
+<div id = "tableSchedule">
 
   <table id ="schedule">
     <thead>
@@ -54,23 +86,20 @@ Tutor Page
       <th scope="col">Start Time</th>
       <th scope="col">End Time</th>
 
-      {% for day in weekdays %}
+      {% for dayL in weekdays %}
 
       <th scope="col">Available</th>
 
       {% endfor %}
     </tr>
-    {% for time in times %}
+    {% for timeL in times %}
 
-    <tr style="background-color:white;">
-      <td>{{ time[0] }}</td>
-      <td>{{ time[1] }}</td>
+    <tr>
+      <td>{{ timeL[0] }}</td>
+      <td>{{ timeL[1] }}</td>
 
       {% for x in range(total_cols) %}
-
-      <form><td onclick = "changeColor('springgreen')"> </td> </form>
-
-
+        <td id = "data" onclick = "changeColor('springgreen', timeL, dayL)"> </td>
       {% endfor %}
 
 
@@ -82,20 +111,27 @@ Tutor Page
 </div>
 
 <script>
-  function changeColor(color) {
+  function changeColor(color, time, day) {
     el = event.target //event.srcElement
-    if(el.style.backgroundColor != color)
-      el.style.backgroundColor = color;
+    if(el.style.backgroundColor != color){
+        el.style.backgroundColor = color;
+        window.alert(time , day);
+    }
     else
       el.style.backgroundColor = el.parentNode.style.backgroundColor;
   }
 
   function refreshBackground() {
-    el = event.target //event.srcElement
-    var s = document.getElementById("schedule");
-    s.style.backgroundColor = "blue";
+    // el = event.target //event.srcElement
+    // var s = document.getElementById("tableSchedule");
+    // s.body.style.backgroundColor= 'blue';
+    document.getElementById("tableSchedule").body.style.backgroundColor = 'blue';
 
-    // el.table.td.backgroundColor = white;
+  }
+
+  function popUp(){
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
 
   }
 </script>

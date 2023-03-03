@@ -1,3 +1,10 @@
 .topnav-right {
     float: right;
 }
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background-color: aqua;
+}
