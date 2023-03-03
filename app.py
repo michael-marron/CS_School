@@ -16,6 +16,7 @@ app = Flask(__name__)
 app.secret_key = 'sosecret'
 
 app.register_blueprint(app_roles, url_prefix="")
+
 #connect to DB
 DB_HOST = "localhost"
 DB_NAME = "login"
