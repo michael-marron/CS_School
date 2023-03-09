@@ -11,6 +11,8 @@ def create_app(config_file=None):
     app.add_url_rule("/", view_func=routes.calendar_page)
     app.add_url_rule("/calendar", view_func=routes.calendar_page)
     app.add_url_rule("/test", view_func=routes.home_page)
+    app.add_url_rule("/tutorPage", view_func=routes.tutor_page)
+
 
     app.config['SECRET_KEY'] = "secret"
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'

@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="62b52334-33b0-472e-8cf1-9ab69149e8a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutor_service/style/tutorPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/style/tutorPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/helper_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" afterDir="false" />
     </list>
@@ -222,7 +224,10 @@
       <workItem from="1676558659356" duration="4186000" />
       <workItem from="1676643011372" duration="4109000" />
       <workItem from="1676647215227" duration="1206000" />
-      <workItem from="1677854542484" duration="5186000" />
+      <workItem from="1677854542484" duration="8485000" />
+      <workItem from="1678201159990" duration="6884000" />
+      <workItem from="1678385187827" duration="1178000" />
+      <workItem from="1678389005831" duration="1760000" />
     </task>
     <servers />
   </component>

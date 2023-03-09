@@ -42,7 +42,7 @@ def get_time_list(start, end):
 
 
 def get_weekdays():
-    d = date.today()
+    # d = datetime.date.today()
     dates_list = []
 
     for x in range(7):

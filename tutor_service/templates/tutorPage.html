@@ -5,6 +5,7 @@ Tutor Page
 {% endblock %}
 <link rel="stylesheet" href="style/tutorPage.css">
 var tutorSchedule = new Array();
+var dayTest, one, two;
 
 <!--
     Table Row (tr)
@@ -64,7 +65,6 @@ var tutorSchedule = new Array();
 </div>
 
 <button onclick="refreshBackground()">Refresh Schedule</button>
-
 <div id = "tableSchedule">
 
   <table id ="schedule">
@@ -77,7 +77,7 @@ var tutorSchedule = new Array();
       <th></th>
       <th></th>
       {% for day in weekdays %}
-      <th scope="col" colspan="1">{{ day }}</th>
+      <th  id = "weekday" scope="col" colspan="1">{{ day }}</th>
       {% endfor %}
     </tr>
     </thead>
@@ -86,7 +86,7 @@ var tutorSchedule = new Array();
       <th scope="col">Start Time</th>
       <th scope="col">End Time</th>
 
-      {% for dayL in weekdays %}
+      {% for day in weekdays %}
 
       <th scope="col">Available</th>
 
@@ -95,14 +95,12 @@ var tutorSchedule = new Array();
     {% for timeL in times %}
 
     <tr>
-      <td>{{ timeL[0] }}</td>
-      <td>{{ timeL[1] }}</td>
+      <td id = start >{{ timeL[0] }}</td>
+      <td id = "end" >{{ timeL[1] }}</td>
 
       {% for x in range(total_cols) %}
-        <td id = "data" onclick = "changeColor('springgreen', timeL, dayL)"> </td>
+          <td id = "data" onclick = "dataClick()"> </td>
       {% endfor %}
-
-
     </tr>
     {% endfor %}
     </tbody>
@@ -111,20 +109,39 @@ var tutorSchedule = new Array();
 </div>
 
 <script>
-  function changeColor(color, time, day) {
+  function dataClick(){
+    changeColor('springgreen');
+    getSchedule();
+  }
+
+  function changeColor(color) {
     el = event.target //event.srcElement
     if(el.style.backgroundColor != color){
         el.style.backgroundColor = color;
-        window.alert(time , day);
+        document.getElementById("schedule")
+        // document.getElementById("data").innerText = clicked;
     }
     else
       el.style.backgroundColor = el.parentNode.style.backgroundColor;
+  }
+  function getSchedule(){
+    //window.alert(document.getElementById("schedule").rows[0].cells[2].innerText); //displays first day of week
+
+    if(document.getElementById("schedule").rows[3].columns[3].innerText === "8:00AM"){
+      window.alert("found 8");
+      //document.getElementById("schedule").rows[i].columns[j].innerHTML;
+
+    }
+    var e = document.getElementById("end").innerText;
+    var d = document.getElementById("weekday").innerText;
+
+
   }
 
   function refreshBackground() {
     // el = event.target //event.srcElement
     // var s = document.getElementById("tableSchedule");
-    // s.body.style.backgroundColor= 'blue';
+    s.body.style.backgroundColor= 'blue';
     document.getElementById("tableSchedule").body.style.backgroundColor = 'blue';
 
   }
