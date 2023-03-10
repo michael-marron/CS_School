@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62b52334-33b0-472e-8cf1-9ab69149e8a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tutor_service/templates/includes/confirm_modal.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutor_service/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/helper_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutor_service/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutor_service/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -228,7 +224,8 @@
       <workItem from="1678201159990" duration="6884000" />
       <workItem from="1678385187827" duration="1178000" />
       <workItem from="1678389005831" duration="2141000" />
-      <workItem from="1678407720240" duration="597000" />
+      <workItem from="1678407720240" duration="4943000" />
+      <workItem from="1678458809517" duration="4504000" />
     </task>
     <servers />
   </component>
