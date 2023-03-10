@@ -125,13 +125,15 @@ var dayTest, one, two;
       el.style.backgroundColor = el.parentNode.style.backgroundColor;
   }
   function getSchedule(){
-    //window.alert(document.getElementById("schedule").rows[0].cells[2].innerText); //displays first day of week
-
-    if(document.getElementById("schedule").rows[3].columns[3].innerText === "8:00AM"){
-      window.alert("found 8");
-      //document.getElementById("schedule").rows[i].columns[j].innerHTML;
-
+    var table = document.getElementById('schedule');
+    for(var i = 0; i < table.length; i++)
+    {
+      for(var j = 0; j < table.rows[i].cells.length; j++)
+      {
+        table.rows[i].cells[j].onclick = alertInnerHTML;
+      }
     }
+    // window.alert(document.getElementById("schedule").rows[0].cells[2].innerText); //displays first day of week
     var e = document.getElementById("end").innerText;
     var d = document.getElementById("weekday").innerText;
 
