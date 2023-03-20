@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
-
+from flask_mail import Mail, Message
+from .extensions import mail
 
 def home_page():
     return render_template('home.html')
@@ -13,6 +14,15 @@ def calendar_page():
     total_cols = create_column_list(cols_list, 7)
     #total_cols = len(weekdays) * num_cols_per_day
     return render_template('calendar.html', times=times, weekdays=weekdays, total_cols=total_cols, cols_list=cols_list)    
+
+def foo():
+  return render_template('mail.html')
+
+def email():
+  msg = Message('Session Scheduled', sender =   'noreply@csschool.io', recipients = ['paul@mailtrap.io'])
+  msg.body = "Hey Paul, your session has been scheduled!"
+  mail.send(msg)
+  return "Message sent!"
 
 def test_page():
     return render_template('home.html')    
