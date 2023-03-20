@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 def create_app(config_file=None):
     # create and configure the app
     app = Flask(__name__)
+    
+    methods = ['GET', 'POST']
 
     app.add_url_rule("/home", view_func=routes.home_page)
     app.add_url_rule("/", view_func=routes.calendar_page)
