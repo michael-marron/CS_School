@@ -1,9 +1,8 @@
 from flask import render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
 from flask import request, session, redirect, url_for, render_template, flash
-import psycopg2
-import psycopg2.extras
-import re
+import psycopg2, psycopg2.extras, re
+from flask_admin import Admin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # connect to DB
