@@ -5,7 +5,6 @@ Tutor Page
 {% endblock %}
 <link rel="stylesheet" href="style/tutorPage.css">
 const tutorSchedule = [];
-var dayTest, one, two;
 
 <!--
     Table Row (tr)
@@ -21,6 +20,9 @@ var dayTest, one, two;
     border-collapse: collapse;
     align-content: center;
     background-color: white;
+  }
+  #schedule{
+    background: white;
   }
 
   td, th {
@@ -100,7 +102,9 @@ var dayTest, one, two;
       <td class = "end" >{{ timeL[1] }}</td>
 
       {% for x in range(total_cols) %}
-          <td class = "data" onclick = "dataClick()"> </td>
+      <form method = "POST">
+          <td class = "data" onclick = "changeColor('springgreen')"> </td>
+      </form>
       {% endfor %}
     </tr>
     {% endfor %}
@@ -110,68 +114,47 @@ var dayTest, one, two;
 </div>
 
 <script>
-  function dataClick(){
-    // getSchedule();
-    changeColor('springgreen');
-  }
 
   function changeColor(color) {
     // window.alert("in change color function");
     el = event.target
-    var row = el.parentNode.rowIndex; //works
+    var row = el.parentNode.rowIndex;
     var col = el.closest("td").cellIndex;
 
-    if(el.style.backgroundColor != color){
+    if(el.style.backgroundColor !== color){
         el.style.backgroundColor = color;
         addToSchedule(row, col);
-      // var data = document.getElementById(idRow).querySelectorAll(".data");
-      // var row = el.parentNode.getElementById("weekday");
-      // window.alert(data);
-        // console.log('selected Row '+ JSON.stringify(row));
-        // var test = el.target.getAttribute("data-row");
-        // window.alert("data row: ");
-        // window.alert("hello");
-        // document.getElementById("schedule");
     }
-    else
+    else{
       el.style.backgroundColor = el.parentNode.style.backgroundColor;
+    }
   }
 
   function addToSchedule(row, col){
     //row 0 col 2:8 are the weekdays
     //row 2:27 col 0 are start times
     //row 2:27 col 1 are end times
-    //window.alert(document.getElementById("schedule").rows[3].cells[1].innerText); //displays first day of week
 
     var table = document.getElementById("schedule");
     var weekday = table.rows[0].cells[col].innerText;
     var startT = table.rows[row].cells[0].innerText;
     var endT = table.rows[row].cells[1].innerText;
-    tutorSchedule.push(weekday);
-    tutorSchedule.push(startT);
-    tutorSchedule.push(endT);
-    // window.alert(weekday + startT + endT);
-
-    // window.alert(document.getElementById("schedule").rows[0].cells[2].innerText); //displays first day of week
-    // var e = document.getElementById("end").innerText;
-    // var d = document.getElementById("weekday").innerText;
-
-
+    // tutorSchedule.push(weekday);
+    // tutorSchedule.push(startT);
+    // tutorSchedule.push(endT);
+    window.alert(weekday + " " + startT + " " + endT);
   }
 
   function refreshBackground() {
-    // el = event.target //event.srcElement
-    // var s = document.getElementById("tableSchedule");
-    s.body.style.backgroundColor= 'blue';
-    document.getElementById("tableSchedule").body.style.backgroundColor = 'blue';
-
+    const d = document.getElementsByClassName("data");
+    for (var i = 0; i < d.length; i++) {
+      d[i].style.backgroundColor = "white";
+    }
   }
 
-  function popUp(){
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-
-  }
 </script>
+def popUp():
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
 
 {% endblock %}

@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62b52334-33b0-472e-8cf1-9ab69149e8a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tutor_service/templates/tutorHelp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tutor_service/tutorFunctions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,6 +22,8 @@
       <list>
         <option value="HTML File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -48,6 +54,11 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CS_School\tutor_service\templates" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <module name="CS_School" />
@@ -225,7 +236,13 @@
       <workItem from="1678385187827" duration="1178000" />
       <workItem from="1678389005831" duration="2141000" />
       <workItem from="1678407720240" duration="4943000" />
-      <workItem from="1678458809517" duration="4504000" />
+      <workItem from="1678458809517" duration="9728000" />
+      <workItem from="1679002323183" duration="595000" />
+      <workItem from="1679013314514" duration="1157000" />
+      <workItem from="1679053472213" duration="2585000" />
+      <workItem from="1679074010308" duration="2930000" />
+      <workItem from="1679355743351" duration="3830000" />
+      <workItem from="1679403799642" duration="372000" />
     </task>
     <servers />
   </component>
