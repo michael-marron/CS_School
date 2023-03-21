@@ -101,11 +101,18 @@ const tutorSchedule = [];
       <td class = "start" >{{ timeL[0] }}</td>
       <td class = "end" >{{ timeL[1] }}</td>
 
-      {% for x in range(total_cols) %}
-      <form method = "POST">
-          <td class = "data" onclick = "changeColor('springgreen')"> </td>
-      </form>
-      {% endfor %}
+
+<!--        <input type="text" class="form-control" name="email" id="email"  placeholder="name@abc.edu" required/>-->
+        {% for x in range(total_cols) %}
+        <form action= "{{ url_for('tutor_page') }}" method = "POST">
+          <div class = "form-group">
+            <div class="input-group">
+              <td class = "data" onclick = "changeColor('springgreen')"> <input type="hidden" class= "form-control" name ="dataCell"></td>
+            </div>
+          </div>
+        </form>
+
+        {% endfor %}
     </tr>
     {% endfor %}
     </tbody>
@@ -123,7 +130,7 @@ const tutorSchedule = [];
 
     if(el.style.backgroundColor !== color){
         el.style.backgroundColor = color;
-        addToSchedule(row, col);
+        return addToSchedule(row, col);
     }
     else{
       el.style.backgroundColor = el.parentNode.style.backgroundColor;
@@ -139,10 +146,12 @@ const tutorSchedule = [];
     var weekday = table.rows[0].cells[col].innerText;
     var startT = table.rows[row].cells[0].innerText;
     var endT = table.rows[row].cells[1].innerText;
+    var time = weekday + " " + startT + " " + endT;
+    return time;
     // tutorSchedule.push(weekday);
     // tutorSchedule.push(startT);
     // tutorSchedule.push(endT);
-    window.alert(weekday + " " + startT + " " + endT);
+    // window.alert(weekday + " " + startT + " " + endT);
   }
 
   function refreshBackground() {

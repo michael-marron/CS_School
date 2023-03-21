@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
+# from tutor_service.tutorFunctions import get_dictionary
 
 
 def home_page():
@@ -15,9 +16,13 @@ def test_page():
     return render_template('home.html')
 
 def tutor_page():
+    print("Hello!!")
     total_cols = 7
     times = get_time_list(8,21)
     weekdays = get_weekdays()
     if request.method == 'POST':
-        print(request.form['data'])
+        print("Hello ",request.form['dataCell'])
+        # print("bye")
+    else:
+        print("bye")
     return render_template('tutorPage.html', times = times, weekdays=weekdays, total_cols = total_cols)
