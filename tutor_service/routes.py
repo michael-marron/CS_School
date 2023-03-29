@@ -42,6 +42,14 @@ def get_dictionary(weekday):
     # print("trying to print day" + weekday)
     # weekday = json.loads(weekday)
     temp = request.get_json(weekday)
-    myDictionary["Daniela"] = temp
+    if "Daniela" not in myDictionary.keys():
+        myDictionary["Daniela"] = temp
+    else:
+        myDictionary.setdefault("Daniela", [])
+        myDictionary["Daniela"].append(temp)
+
     print(myDictionary)
     return ('/')
+
+# Monday -> [8-8:30], [10-10:30]
+# Wednesday -> [9-9:30], [10-10:30]

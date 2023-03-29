@@ -1,5 +1,5 @@
 from flask import Flask
-
+from tutor_service import routes
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -24,4 +24,3 @@ def create_app(config_file=None):
     return app
 
 #This is where we will declare the db, login manager, 
-from tutor_service import routes
