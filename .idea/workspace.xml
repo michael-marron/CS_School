@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="62b52334-33b0-472e-8cf1-9ab69149e8a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutor_service/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutor_service/tutorFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/tutorFunctions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +56,7 @@
       <recent name="D:\CS_School\tutor_service\templates" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Flask server.CS_School">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <module name="CS_School" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -147,6 +145,21 @@
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="CS_School" type="Python.FlaskServer">
+      <module name="CS_School" />
+      <option name="target" value="$PROJECT_DIR$/tutor_service/__init__.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="Python.FlaskServer">
@@ -241,7 +254,11 @@
       <workItem from="1679053472213" duration="2585000" />
       <workItem from="1679074010308" duration="2930000" />
       <workItem from="1679355743351" duration="3830000" />
-      <workItem from="1679403799642" duration="5152000" />
+      <workItem from="1679403799642" duration="9021000" />
+      <workItem from="1679605457714" duration="2104000" />
+      <workItem from="1679607715841" duration="3091000" />
+      <workItem from="1679672785117" duration="1706000" />
+      <workItem from="1679753393834" duration="1718000" />
     </task>
     <servers />
   </component>
