@@ -22,7 +22,7 @@ def tutor_page():
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     if request.method == 'POST':
         # print("trying to print table data ", request.form['dictionary'])
-        print("bye")
+        print("post request")
     else:
         print("bye")
     return render_template('tutorPage.html', times = times, weekdays=weekdays, total_cols = total_cols)

@@ -1,4 +1,5 @@
 <script>
+    const dictionary = {};
 
     function changeColor(color) {
     // window.alert("in change color function");
@@ -8,49 +9,62 @@
 
     if(el.style.backgroundColor !== color){
     el.style.backgroundColor = color;
-    addToSchedule(row, col);
-    // var data = document.getElementById(idRow).querySelectorAll(".data");
-    // var row = el.parentNode.getElementById("weekday");
-    // window.alert(data);
-    // console.log('selected Row '+ JSON.stringify(row));
-    // var test = el.target.getAttribute("data-row");
-    // window.alert("data row: ");
-    // window.alert("hello");
-    // document.getElementById("schedule");
+    return addToSchedule(row, col);
 }
     else{
-    el.style.backgroundColor = el.parentNode.style.backgroundColor;}
+    el.style.backgroundColor = el.parentNode.style.backgroundColor;
+}
 }
 
-function addToSchedule(row, col){
+    function addToSchedule(row, col){
     //row 0 col 2:8 are the weekdays
     //row 2:27 col 0 are start times
     //row 2:27 col 1 are end times
-    //window.alert(document.getElementById("schedule").rows[3].cells[1].innerText); //displays first day of week
 
     var table = document.getElementById("schedule");
     var weekday = table.rows[0].cells[col].innerText;
     var startT = table.rows[row].cells[0].innerText;
     var endT = table.rows[row].cells[1].innerText;
-    // tutorSchedule.push(weekday);
-    // tutorSchedule.push(startT);
-    // tutorSchedule.push(endT);
-    window.alert(weekday + startT + endT);
+    var time = startT + " " + endT;
 
-    // window.alert(document.getElementById("schedule").rows[0].cells[2].innerText); //displays first day of week
-    // var e = document.getElementById("end").innerText;
-    // var d = document.getElementById("weekday").innerText;
+    // dictionary[weekday] = time;
+    //M -> "8-8:30" "9-9:30"
+    //T -> "11-11:30" "5-5:30"
 
+    // return time;
+    // window.alert(weekday + " " + startT + " " + endT);
 }
 
     function refreshBackground() {
-    window.alert("refresh background");
-    // el = event.target //event.srcElement
-    var s = document.getElementById("tableSchedule");
-    // s.parentNode.body.style.backgroundColor= 'blue';
-    s.style.backgroundColor = 'blue';
-
+    // const dict = getDictionary();
+    // window.alert("size: " + dict.size);
+    // for(var key in dict) {
+    //     var value = dict[key];
+    //     console.log("key: " + key + " val: " + value);
+    //     // do something with "key" and "value" variables
+    // }
+    const d = document.getElementsByClassName("data");
+    for (var i = 0; i < d.length; i++) {
+    d[i].style.backgroundColor = "white";
+}
 }
 
+    function getDictionary(){
+    // const d = document.getElementsByClassName("data");
+    var table = document.getElementById('schedule');
+    for (var row = 0; row < table.rows.length; row++) {
+    for (var col = 0;  col < table.rows[row].cells.length; c++) {
+    if(table.rows[row].cells[col].style.backgroundColor === "springgreen"){
+    window.alert("found green");
+    var startT = table.rows[row].cells[0].innerText;
+    var endT = table.rows[row].cells[1].innerText;
+    var time = startT + " " + endT;
+    dictionary[table.rows[0].cells[col].innerText] = time;
+    // window.alert("time" + time);
+}
+}
+}
+    return dictionary.toString();
+}
 
 </script>
