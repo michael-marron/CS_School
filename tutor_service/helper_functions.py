@@ -1,6 +1,7 @@
 import calendar
 from datetime import datetime, timedelta, date
 
+
 def get_time_list(start, end):
     list_times = []
     #start time is 8:00am
@@ -39,8 +40,6 @@ def get_time_list(start, end):
 
 
     return list_times
-
-
 
 def get_weekdays():
     d = date.today()
