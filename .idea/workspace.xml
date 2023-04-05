@@ -8,6 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutor_service/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorHelp.js" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorHelp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/tutor_service/templates/tutorPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +63,7 @@
       <recent name="D:\CS_School\tutor_service\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.CS_School">
+  <component name="RunManager" selected="Flask server.CS_School">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <module name="CS_School" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -266,6 +268,7 @@
       <workItem from="1679753393834" duration="1718000" />
       <workItem from="1680096972304" duration="2441000" />
       <workItem from="1680126438595" duration="341000" />
+      <workItem from="1680705438813" duration="3850000" />
     </task>
     <servers />
   </component>
