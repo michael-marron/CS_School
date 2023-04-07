@@ -14,8 +14,7 @@ def create_app(config_file=None):
     app.add_url_rule("/tutorPage", view_func=routes.tutor_page, methods=["POST", "GET"])
     app.add_url_rule('/add_to_dictionary/<string:entire>', view_func=routes.add_to_dictionary, methods=["POST"])
     app.add_url_rule('/remove_from_dictionary/<string:entire>', view_func=routes.remove_from_dictionary, methods=["POST"])
-
-
+    app.add_url_rule("/get_dictionary", view_func=routes.tutor_page, methods=["POST"])
 
     app.config['SECRET_KEY'] = "secret"
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'

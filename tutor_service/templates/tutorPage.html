@@ -61,19 +61,16 @@ Tutor Page
 </style>
 
 <h1>Tutor Schedule</h1>
-<form action= "{{ url_for('tutor_page') }}" method = "POST">
+<form action= "/get_dictionary" method = "POST">
   <div class = "form-group">
-    <div class= "input-group">
         <div class = "popup" >
 <!--            <input type="hidden" class= "form-control" name ="dataCell" > onclick="getDictionary()"-->
-<!--            <body onload = "getDictionary()">-->
-            <input type="submit" value= "Save Schedule" name = "dictionary" onsubmit="return false">
-<!--            </body>-->
+<!--            <input type= "button" value= "Save Schedule" name = "save" />-->
+            <button name="saveSchedule" type="submit">Save Schedule</button>
           <span class="popuptext" id="myPopup">Schedule saved!</span>
         </div>
-    </div>
   </div>
-
+</form>
 <button onclick="refreshBackground()">Refresh Schedule</button>
 
 <div id = "tableSchedule">
@@ -110,12 +107,8 @@ Tutor Page
       <td class = "start" >{{ time[0] }}</td>
       <td class = "end" >{{ time[1] }}</td>
 
-
-<!--        <input type="text" class="form-control" name="email" id="email"  placeholder="name@abc.edu" required/>-->
         {% for x in range(total_cols) %}
-              <td class = "data" onclick = "changeColor('springgreen')">
-
-              </td>
+              <td class = "data" onclick = "changeColor('springgreen')"></td>
         {% endfor %}
     </tr>
     {% endfor %}
@@ -123,7 +116,7 @@ Tutor Page
 
   </table>
 </div>
-</form>
+
 
 {% endblock %}
 </html>

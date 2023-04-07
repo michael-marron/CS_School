@@ -31,8 +31,8 @@ def tutor_page():
     times = get_time_list(8, 21)
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     if request.method == 'POST':
-        # print("trying to print table data ", request.form['dictionary'])
-        print("post request")
+        finalResult = get_dictionary()
+        # print("post request")
     else:
         print("bye")
     return render_template('tutorPage.html', times=times, weekdays=weekdays, total_cols=total_cols)
@@ -74,20 +74,20 @@ def remove_from_dictionary(entire):
     if isinstance(k,list) and k: # this is a list, and not empty
         v = k.index(value)
         myDictionary[key].pop(v)
-        # k.pop(v)
     else:
         # error message
-        print("Warning: nothing done")
+        print("Warning: could not find ", key ," in dictionary")
 
     #debug statements to see what is being deleted from dictionary
     #print("trying to delete ", req)
     #print(myDictionary)
     return ('/')
 def get_dictionary():
-    #debug statement to see format of dictionary
-
+    #debug statement to see contents of dictionary
+    # if request.method == 'POST':
+    #     result = request.form
+    # print("result: ", result)
     print(myDictionary)
     return myDictionary
 
-# Monday -> [8-8:30], [10-10:30]
-# Wednesday -> [9-9:30], [10-10:30]
+
