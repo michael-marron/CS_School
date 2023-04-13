@@ -8,11 +8,12 @@ from flask_mail import Mail, Message
 from .extensions import mail
 
 
-# connect to DB
+# connect to local db
 DB_HOST = "localhost"
 DB_NAME = "login"
 DB_USER = "postgres"
 DB_PASS = "000000"
+
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
                         password=DB_PASS, host=DB_HOST)

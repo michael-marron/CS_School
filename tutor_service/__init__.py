@@ -13,14 +13,6 @@ def create_app(config_file=None):
     
     methods = ['GET', 'POST']
 
-    app.secret_key = 'sosecret'
-    DB_HOST = "localhost"
-    DB_NAME = "login"
-    DB_USER = "postgres"
-    DB_PASS = "000000"
-
-    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
-                        password=DB_PASS, host=DB_HOST)
 
     app.add_url_rule("/home", view_func=routes.home_page)
     app.add_url_rule("/", view_func=routes.calendar_page)
@@ -31,7 +23,7 @@ def create_app(config_file=None):
     app.add_url_rule("/reset", view_func=routes.reset, methods=['GET','POST'])
 
     app.config['SECRET_KEY'] = "secret"
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://csschool_db_user:yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh@dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com/csschool_db'
 
     # mail routes
     app.add_url_rule("/foo", view_func=routes.foo)
