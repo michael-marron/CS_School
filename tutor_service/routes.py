@@ -6,6 +6,8 @@ from flask_admin import Admin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from .extensions import mail
+from flask_admin.contrib.sqla import ModelView
+from flask_sqlalchemy import SQLAlchemy
 
 
 # connect to local db

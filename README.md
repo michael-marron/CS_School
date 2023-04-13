@@ -14,3 +14,6 @@ then : flask run
 pip install pytest
 pytest --version
 To run: pytest
+
+packages:
+pip install pytz
