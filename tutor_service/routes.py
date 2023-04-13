@@ -23,7 +23,6 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def register():
     # bound to the db during the registration
-
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print("in register")
 
@@ -79,10 +78,12 @@ def register():
     # return the template with appropreate alert
     return render_template('register.html')
 
+# need to be emplemented, does not work yet
 def configure_session_expiration():
     session.permanent = True
     current_app.permanent_session_lifetime = timedelta(seconds=5)
     session['expires_at'] = (datetime.now() + timedelta(seconds=5)).strftime('%Y-%m-%d %H:%M:%S.%f')
+
 # log in-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def login():
    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
