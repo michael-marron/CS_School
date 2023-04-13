@@ -16,4 +16,4 @@ pytest --version
 To run: pytest
 
 packages:
-pip install pytz
+pip install flask-session

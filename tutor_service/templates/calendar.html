@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block head %}
-    Calendar Page
+Calendar Page
 {% endblock %}
 
 <!--
@@ -13,12 +13,15 @@
 {% block body %}
 
 <style>
-    table, th, td {
+    table,
+    th,
+    td {
         border: 1px solid black;
         border-collapse: collapse;
     }
 
-    td, th {
+    td,
+    th {
         padding: 15px;
     }
 </style>
@@ -27,8 +30,8 @@
     <br>
 
     <h1>Tutor Calendar</h1>
-    
-    
+
+
     {% include 'includes/confirm_modal.html' %}
 
     <!--
@@ -44,64 +47,72 @@
             <th scope="col" rowspan="2">Start Time</th>
             <th scope="col" rowspan="2">End Time</th>
                 -->
-            <th></th>
-            <th></th>
-            {% for day in weekdays %}
-            <th scope="col" colspan="5">{{ day }}</th>
-            {% endfor %}
+                <th></th>
+                <th></th>
+                {% for day in weekdays %}
+                <th scope="col" colspan="5">{{ day }}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
             <tr>
                 <th scope="col">Start Time</th>
                 <th scope="col">End Time</th>
-                
+
                 {% for day in weekdays %}
-                
-                    {% for col_data in cols_list %}
-                        <th scope="col">{{ col_data }}</th>
-                    {% endfor %}
+
+                {% for col_data in cols_list %}
+                <th scope="col">{{ col_data }}</th>
+                {% endfor %}
 
                 {% endfor %}
             </tr>
-            {% for time in times %} 
+            {% for time in times %}
             <tr>
                 <td>{{ time[0] }}</td>
                 <td>{{ time[1] }}</td>
-                
+
                 {% for x in total_cols %}
-                    {% if time[0] == "10:00AM" %}
-                        {% if x == "Tutor" %}
-                            <td>John</td>
-                        {% endif %}     
-                        
-                        {% if x == "Tutor Service" %}
-                            <td>Computer Science</td>
-                        {% endif %}
-                        
-                        {% if x == "Zoom Link" %}
-                            <td>https:zoom.com</td>
-                        {% endif %}
-                        
-                        {% if x == "Spaces Available" %}
-                            <td>2/3</td>
-                        {% endif %}
-                        {% if x == "Confirm" %}  
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Confirm-Modal">
-                                Confirm
-                            </button></td>
-                        {% endif %}                 
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                {% if time[0] == "10:00AM" %}
+                {% if x == "Tutor" %}
+                <td>John</td>
+                {% endif %}
+
+                {% if x == "Tutor Service" %}
+                <td>Computer Science</td>
+                {% endif %}
+
+                {% if x == "Zoom Link" %}
+                <td>https:zoom.com</td>
+                {% endif %}
+
+                {% if x == "Spaces Available" %}
+                <td>2/3</td>
+                {% endif %}
+                {% if x == "Confirm" %}
+                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Confirm-Modal">
+                        Confirm
+                    </button></td>
+                {% endif %}
+                {% else %}
+                <td></td>
+                {% endif %}
 
                 {% endfor %}
-                
+
             </tr>
             {% endfor %}
         </tbody>
 
     </table>
+
+
+    {% if logout_after %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{{ url_for('logout') }}";}, {{ logout_after * 1000}});
+    </script>
+    {% endif %}
 </div>
 
 {% endblock %}

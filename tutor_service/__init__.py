@@ -1,6 +1,6 @@
 from tutor_service import routes
-from flask import Flask
-
+from flask import Flask, session
+from datetime import timedelta
 from .extensions import mail
 
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +9,6 @@ from flask_admin import Admin
 from flask_security import RoleMixin, UserMixin
 from flask_admin.contrib.sqla import ModelView
 import psycopg2
-
 
 def create_app(config_file=None):
     # create and configure the app
@@ -21,7 +20,7 @@ def create_app(config_file=None):
     app.add_url_rule("/calendar", view_func=routes.calendar_page)
     app.add_url_rule("/test", view_func=routes.home_page)
 
-    # Log in- sign in, reset, admin
+    # Log in- sign in, log out button,reset, admin, 
     app.add_url_rule("/log", view_func=routes.login, methods=['GET', 'POST'])
     app.add_url_rule("/reg", view_func=routes.register,
                      methods=['GET', 'POST'])
@@ -29,6 +28,13 @@ def create_app(config_file=None):
     app.add_url_rule("/admin", view_func=routes.ad_page,
                      methods=['GET', 'POST'])
     app.add_url_rule("/logout", view_func=routes.logout)
+
+    app.config['SESSION_PERMANENT'] = True
+    app.config['SESSION_TYPE'] = 'filesystem'
+
+    #app.config['PERMANENT_SESSION_LIFETIME'] = 20
+
+
 
     # mail routes
     app.add_url_rule("/foo", view_func=routes.foo)
@@ -53,17 +59,11 @@ def create_app(config_file=None):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://csschool_db_user:yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh@dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com/csschool_db'
     db = SQLAlchemy(app)
 
-    class User(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        name = db.Column(db.String(200), nullable=False)
-        email = db.Column(db.String(200), nullable=False, unique=True)
-        password = db.Column(db.String(255), nullable=False)
-
     #class Post(db.Model)
 
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
     admin = Admin(app, name='Tutor Service', template_mode='bootstrap3')
-    admin.add_view(ModelView(User, db.session))
+    #admin.add_view(ModelView(User, db.session))
     #admin.add_view(ModelView(Post, db.session))
 
 
