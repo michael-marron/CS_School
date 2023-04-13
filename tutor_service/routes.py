@@ -26,21 +26,21 @@ def register():
     print("in register")
 
     # Check if input POST requests
-    if 'username' in request.form and 'password' in request.form and 'email' in request.form and request.method == 'POST' and 'confirmpass' in request.form:
+    if 'firstname' in request.form and 'lastname' in request.form and 'password' in request.form and 'email' in request.form and request.method == 'POST' and 'confirmpass' in request.form:
 
-        username = request.form['username']
+        fname = request.form['firstname']
+        lname = request.form['lastname']
         email = request.form['email']
         password = request.form['password']
         confirmpass = request.form['confirmpass']
 
-        print("user: ", username, email)  # check for input in dev stage
+        print("user: ", fname, email)  # check for input in dev stage
 
         hashedpass = generate_password_hash(
             password, "pbkdf2:sha256", 64)  # hask password , salt 64 bits
 
         # Check if account exists, use cursor.fetchon to get each row in the table
-        cursor.execute('SELECT * FROM users WHERE email = %s',
-                       (email,))  # keep this comma
+        cursor.execute('SELECT * FROM userinfo WHERE email = %s', (email,))  # keep this comma
         account = cursor.fetchone()
 
         # existing acc
@@ -50,10 +50,14 @@ def register():
         elif not re.match(r'[^@]+@+[A-Za-z0-9]+.edu', email):
             flash('Invalid email address! Only use .edu email to register!')
             print("---invalid email")
-        # invalid username (only accept numbers and chars)
-        elif not re.match(r'[A-Za-z0-9]+', username):
+        # invalid firstrname (only accept numbers and chars)
+        elif not re.match(r'[A-Za-z0-9]+', fname):
             flash('Invalid!\nUsername must contain only characters and numbers')
-            print("---invalid pass")
+            print("---invalid name")
+        # invalid lastname (only accept numbers and chars)
+        elif not re.match(r'[A-Za-z0-9]+', lname):
+            flash('Invalid!\nUsername must contain only characters and numbers')
+            print("---invalid last name")
         # check password strength
         elif not re.match(r'^.{8,}$', password):
             flash("At least 8 characters for password!")
@@ -63,7 +67,7 @@ def register():
 
         else:
             cursor.execute(
-                "INSERT INTO users (email,username, password) VALUES (%s,%s,%s)", (email, username, hashedpass))
+                "INSERT INTO userinfo (email, firstname, lastname, userpassword) VALUES (%s,%s,%s, %s)", (email, fname,lname, hashedpass))
             conn.commit()
             flash('You have successfully registered!')
             print("added")
@@ -117,6 +121,8 @@ def login():
 def reset():
     return render_template('reset.html')
 
+def ad_page():
+    return render_template('admin.html')
 
 
 def home_page():
