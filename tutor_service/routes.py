@@ -81,6 +81,13 @@ def register():
 def login():
    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
+   query = '''SELECT *
+               FROM userinfo
+               JOIN userrole
+               ON userinfo.userid = userrole.userid
+               WHERE userinfo.email = %s
+            '''
+
    # Check if "username" and "password" POST requests exist (user submitted form)
    if 'email' in request.form and 'password' in request.form and request.method == 'POST':
         email = request.form['email']
@@ -88,33 +95,59 @@ def login():
         print("in log in function")
 
         # fetch row in db
-        cursor.execute('SELECT * FROM userinfo WHERE email = %s',
-                       (email,))  # comma for tuples
+        #cursor.execute('SELECT * FROM userinfo WHERE email = %s', (email,))  # comma for tuples
+        #account = cursor.fetchone()
+        
+        cursor.execute(query, (email,))
         account = cursor.fetchone()
+
         print("fetch db row")
 
         if account:
-            password_rs = account['userpassword']
+            password_ = account['userpassword']
 
             # If account exists in users table in out database
-            if check_password_hash(password_rs, password):
+            if check_password_hash(password_, password):
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
                 session['id'] = account['userid']
                 session['email'] = account['email']
+                session['role'] = account['userrole']
+
+                if account['userrole']== 'Admin': 
+                    print ('expect Admin, get ', account['userrole'], " email: ", account['email'] )
+                    return redirect(url_for('ad_page'))
+
+                elif account['userrole']== 'Tutor': 
+                    print ('expect Tutor, get ', account['userrole']," email: ", account['email'])
+                    return redirect(url_for('calendar_page')) # do not have tutor page in the code, need route to tutor page
+                
+                else:
                 # Redirect to home page
-                return redirect(url_for('calendar_page'))
+                    print ('expect student, get ', account['userrole'], ', name: ', account['firstname'], ", email: ", account['email'])
+                    return redirect(url_for('calendar_page'))
             else:
-                # Account doesnt exist or username/password incorrect
+                
+                print('in log in _ wrong pass')
                 flash('Incorrect email/password')
         else:
-            # Account doesnt exist or username/password incorrect
+            print ('in log in page - wrong email')
             flash('Incorrect email/password')
 
    else:
         print("input???")
    return render_template('login.html')
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def logout():
+
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    session.pop('email', None)
+    session.pop('role', None)
+    
+    return redirect(url_for('login'))
 
 def reset():
     return render_template('reset.html')

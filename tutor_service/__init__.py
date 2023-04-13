@@ -24,6 +24,8 @@ def create_app(config_file=None):
     app.add_url_rule("/reg", view_func=routes.register, methods=['GET','POST'])
     app.add_url_rule("/reset", view_func=routes.reset, methods=['GET','POST'])
     app.add_url_rule("/admin", view_func=routes.ad_page, methods=['GET','POST'])
+    app.add_url_rule("/logout", view_func=routes.logout)
+
     
 
     app.config['SECRET_KEY'] = "secret"
