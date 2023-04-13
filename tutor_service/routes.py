@@ -18,7 +18,7 @@ DB_PASS = "000000"
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
                         password=DB_PASS, host=DB_HOST)
 
-
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def register():
     # bound to the db during the registration
 
@@ -77,9 +77,7 @@ def register():
     # return the template with appropreate alert
     return render_template('register.html')
 
-# log in
-
-
+# log in-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def login():
    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -90,22 +88,22 @@ def login():
         print("in log in function")
 
         # fetch row in db
-        cursor.execute('SELECT * FROM users WHERE email = %s',
+        cursor.execute('SELECT * FROM userinfo WHERE email = %s',
                        (email,))  # comma for tuples
         account = cursor.fetchone()
         print("fetch db row")
 
         if account:
-            password_rs = account['password']
+            password_rs = account['userpassword']
 
             # If account exists in users table in out database
             if check_password_hash(password_rs, password):
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
-                session['id'] = account['id']
+                session['id'] = account['userid']
                 session['email'] = account['email']
                 # Redirect to home page
-                return redirect(url_for('home_page'))
+                return redirect(url_for('calendar_page'))
             else:
                 # Account doesnt exist or username/password incorrect
                 flash('Incorrect email/password')
