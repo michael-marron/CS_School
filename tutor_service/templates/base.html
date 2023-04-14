@@ -40,10 +40,18 @@
 </head>
 <body>
     <ul>
+
         <li><a href="/tutorPage">TutorService</a></li>
         <li><a href="/home">Home</a></li>
         <li><a href="">Register</a></li>
         <li><a href="">Login</a></li>
+
+        <li><a href="{{ url_for('calendar_page') }}">TutorService</a></li>
+        <li><a href="{{ url_for('home_page') }}">Home</a></li>
+        <li style="float:right"><a href="{{ url_for('register') }}">Register</a></li>
+        <li style="float:right"><a href="{{ url_for('login') }}">Login</a></li>
+        <li style="float:right"><a href="{{ url_for('logout') }}">Logout</a></li>
+
     </ul>
     <br>
 

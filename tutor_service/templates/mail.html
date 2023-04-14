@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+
+{% block head %}
+    Cancel Session 
+{% endblock %}
+
+
+
+{% block body %}
+
+<button id = "mail-btn" onclick="confirmation()">Schedule</button>
+
+<script>
+    // variable referencing button
+    const button = document.getElementById('mail-btn'); 
+
+    // Only called when button is actually clicked
+    function confirmation() {
+    let text = "Schedule this session?";
+    if (confirm(text) == true){
+        button.addEventListener('click', () => { 
+            fetch('/email', {method: 'POST'}) 
+                .then(response => response.text()) 
+                .then(text => console.log(text)); 
+        });
+    }
+
+    }
+</script>  
+
+{% endblock %}
