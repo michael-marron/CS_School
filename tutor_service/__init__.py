@@ -1,8 +1,10 @@
+
+from flask import Flask
+from tutor_service import routes
 from tutor_service import routes
 from flask import Flask, session
 from datetime import timedelta
 from .extensions import mail
-
 from flask_sqlalchemy import SQLAlchemy
 
 from flask_admin import Admin
@@ -19,6 +21,10 @@ def create_app(config_file=None):
     app.add_url_rule("/", view_func=routes.calendar_page)
     app.add_url_rule("/calendar", view_func=routes.calendar_page)
     app.add_url_rule("/test", view_func=routes.home_page)
+    app.add_url_rule("/tutorPage", view_func=routes.tutor_page, methods=["POST", "GET"])
+    app.add_url_rule('/add_to_dictionary/<string:entire>', view_func=routes.add_to_dictionary, methods=["POST"])
+    app.add_url_rule('/remove_from_dictionary/<string:entire>', view_func=routes.remove_from_dictionary, methods=["POST"])
+    app.add_url_rule("/get_dictionary", view_func=routes.tutor_page, methods=["POST"])
 
     # Log in- sign in, log out button,reset, admin, 
     app.add_url_rule("/log", view_func=routes.login, methods=['GET', 'POST'])
@@ -66,5 +72,7 @@ def create_app(config_file=None):
     #admin.add_view(ModelView(User, db.session))
     #admin.add_view(ModelView(Post, db.session))
 
+#This is where we will declare the db, login manager, 
 
     return app
+

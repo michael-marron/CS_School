@@ -41,9 +41,8 @@ def get_time_list(start, end):
     return list_times
 
 
-
 def get_weekdays():
-    d = date.today()
+    # d = datetime.date.today()
     dates_list = []
 
     for x in range(7):
@@ -59,8 +58,8 @@ def get_columns(*args):
     col_list = []
     for x in args:
         col_list.append(x)
-    
-    return col_list    
+
+    return col_list
 
 def create_column_list(col_list, num_days):
     all_cols_list = []
@@ -68,4 +67,4 @@ def create_column_list(col_list, num_days):
         for y in col_list:
             all_cols_list.append(y)
 
-    return all_cols_list        
+    return all_cols_list

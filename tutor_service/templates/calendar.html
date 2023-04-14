@@ -1,3 +1,76 @@
+
+{% extends 'base.html'%}
+
+{% block head %}
+    Calendar Page
+{% endblock %}
+
+<!--
+    Table Row (tr)
+    Table Data (td), the content of the table cell
+    Table Header (th), text in th elements are bold and centered by default
+-->
+
+{% block body %}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 15px;
+    }
+</style>
+
+<div>
+    <h1>Tutor Calendar</h1>
+    <table>
+        <thead>
+            <tr>
+                <!--
+            <th scope="col" rowspan="2">Start Time</th>
+            <th scope="col" rowspan="2">End Time</th>
+                -->
+            <th></th>
+            <th></th>
+            {% for day in weekdays %}
+            <th scope="col" colspan="4">{{ day }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                
+                {% for day in weekdays %}
+                
+                <th scope="col">Tutor</th>
+                <th scope="col">Tutor Topic</th>
+                <th scope="col">Zoom Link</th>
+                <th scope="col">Spaces Available</th>
+        
+                {% endfor %}
+            </tr>
+            {% for time in times %} 
+            <tr>
+                <td>{{ time[0] }}</td>
+                <td>{{ time[1] }}</td>
+
+                {% for x in range(total_cols) %}
+                <td></td>
+                {% endfor %}
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+=======
 {% extends 'base.html'%}
 
 {% block head %}
@@ -115,5 +188,6 @@ Calendar Page
     </script>
     {% endif %}
 </div>
+
 
 {% endblock %}
