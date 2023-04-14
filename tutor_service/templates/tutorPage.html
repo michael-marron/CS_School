@@ -115,6 +115,14 @@ Tutor Page
     </tbody>
 
   </table>
+
+  {% if logout_after %}
+  <script>
+      setTimeout(function () {
+          window.location.href = "{{ url_for('logout') }}";}, {{ logout_after * 1000}});
+  </script>
+  {% endif %}
+
 </div>
 
 

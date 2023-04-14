@@ -143,7 +143,7 @@ def login():
                 elif account['userrole']== 'Tutor': 
                     print ('expect Tutor, get ', account['userrole']," email: ", account['email'])
                     configure_session_expiration()
-                    return redirect(url_for('calendar_page')) # do not have tutor page in the code, need route to tutor page
+                    return redirect(url_for('tutor_page')) # do not have tutor page in the code, need route to tutor page
                 
                 else:
                 # Redirect to home page
@@ -229,6 +229,9 @@ def calendar_page():
 
 #--------------------------------------------------------------------------------------------------------------------------------
 def tutor_page():
+
+    logout_after = 60
+
     print("Hello!!")
     total_cols = 7
     times = get_time_list(8, 21)
@@ -238,7 +241,7 @@ def tutor_page():
         # print("post request")
     else:
         print("bye")
-    return render_template('tutorPage.html', times=times, weekdays=weekdays, total_cols=total_cols)
+    return render_template('tutorPage.html', times=times, weekdays=weekdays, total_cols=total_cols, logout_after=logout_after)
 
 
 # @app.route('/my_function')
