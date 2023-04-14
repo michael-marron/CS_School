@@ -14,8 +14,7 @@ def create_app(config_file=None):
     app = Flask(__name__)
 
     methods = ['GET', 'POST']
-
-    app.add_url_rule("/", view_func=routes.calendar_page)
+    app.add_url_rule("/", view_func=routes.login, methods=['GET', 'POST'])
     app.add_url_rule("/calendar", view_func=routes.calendar_page)
     app.add_url_rule("/test", view_func=routes.home_page)
     app.add_url_rule("/tutorPage", view_func=routes.tutor_page, methods=["POST", "GET"])
@@ -62,8 +61,6 @@ def create_app(config_file=None):
     DATABASE_URL='postgresql://csschool_db_user:yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh@dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com/csschool_db'
 
     db = SQLAlchemy(app)
-    engine = db.engine
-    conn = engine.raw_connection()
    
     return app
 
