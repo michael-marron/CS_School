@@ -1,0 +1,155 @@
+{% extends 'base.html'%}
+
+{% block head %}
+    Calendar Page
+{% endblock %}
+
+<!--
+    Table Row (tr)
+    Table Data (td), the content of the table cell
+    Table Header (th), text in th elements are bold and centered by default
+-->
+
+{% block body %}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 15px;
+    }
+</style>
+
+<div>
+    <br>
+
+    <h1>Tutor Calendar</h1>
+
+    <head>
+        <title>Select Tutor</title>
+    </head>
+    <body>
+        <form method="POST">
+            <select name="tutors_dropdown" id="tutors_dropdown">
+                <option value="all">all</option>
+                {% for tutor_name in tutor_set %}
+                <option value={{ tutor_name }}>{{ tutor_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+    </body>
+
+    <br>
+    
+    <table>
+        <thead>
+        <tr>    
+        <th scope="col"></th>
+        <th scope="col"></th>
+        {% for day in weekday %}
+            <th scope="col" colspan={{ num_attributes }}>{{ day[0] }}, {{ day[1] }}</th>
+        {% endfor %}
+        </tr>
+
+        <tr>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+                {% for attribute in calendar_attributes %}
+                    <th scope="col"> {{ attribute }} </th>
+                {% endfor %}
+        </tr>
+
+        </thead>
+        
+        <tbody>
+        
+            {% for time in times %}
+
+            {% if times_dictionary[time[0]] > 1 %}
+                {% for mul_times in range(times_dictionary[time[0]]) %}
+                    <tr>
+                    <td>{{ time[0] }}</td>
+                    <td>{{ time[1] }}</td>
+                {% endfor %}
+            {% else %}
+                <tr>
+                <td>{{ time[0] }}</td>
+                <td>{{ time[1] }}</td>
+            {% endif %}
+           
+
+            {% set ns = namespace(session=false) %}
+            
+            {% for session in sessions %}   
+                {% if tutor_selected_from_dropdown == "all" %}
+                {% include 'includes/confirm_modal.html' %}
+                    {% if session.times_available == time[0] %}
+                        {% set data_color = "#FFFFFF" %}
+                        
+                        {% if session.spaces_available == 0 %}
+                            {% set data_color = "#FFCCCB" %}
+                        {% endif %}    
+                        
+                        {% set ns.session = true %}
+                        <td bgcolor={{ data_color }}>{{ session.tutor }}</td>
+                        <td bgcolor={{ data_color }}>{{ session.tutor_service }}</td>
+                        <td bgcolor={{ data_color }}>{{ session.zoom_link }}</td>
+                        <td bgcolor={{ data_color }}>{{ session.spaces_available }}</td>
+            
+                        {% if session.spaces_available == 0 %}
+                        <td bgcolor={{ data_color }}>Full </td>
+                        {% else %}
+                        <td bgcolor={{ data_color }}>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" 
+                        data-target="#Confirm-Modal-{{ session.id }}">Confirm</button>
+                        </td>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                {% if tutor_selected_from_dropdown == session.tutor %}
+                {% include 'includes/confirm_modal.html' %}
+                    {% if session.times_available == time[0] %}
+                        {% set data_color = "#FFFFFF" %}
+                        
+                        {% if session.spaces_available == 0 %}
+                            {% set data_color = "#FFCCCB" %}
+                        {% endif %}    
+                        
+                        {% set ns.session = true %}
+                        <td bgcolor={{ data_color }}>{{ session.tutor }}</td>
+                        <td bgcolor={{ data_color }}>{{ session.tutor_service }}</td>
+                        <td bgcolor={{ data_color }}>{{ session.zoom_link }}</td>
+                        <td bgcolor={{ data_color }}>{{ session.spaces_available }}</td>
+            
+                        {% if session.spaces_available == 0 %}
+                        <td bgcolor={{ data_color }}>Full </td>
+                        {% else %}
+                        <td bgcolor={{ data_color }}>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" 
+                        data-target="#Confirm-Modal-{{ session.id }}">Confirm</button>
+                        </td>
+                        {% endif %}
+                    {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if ns.session==false %}
+            <td bgcolor="#D3D3D3"></td>
+            <td bgcolor="#D3D3D3"></td>
+            <td bgcolor="#D3D3D3"></td>
+            <td bgcolor="#D3D3D3"></td>
+            <td bgcolor="#D3D3D3"></td>
+            {% endif %}
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+
+   
+{% endblock %}

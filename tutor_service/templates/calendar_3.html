@@ -1,0 +1,109 @@
+{% extends 'base.html'%}
+
+{% block head %}
+    Calendar Page
+{% endblock %}
+
+<!--
+    Table Row (tr)
+    Table Data (td), the content of the table cell
+    Table Header (th), text in th elements are bold and centered by default
+-->
+
+{% block body %}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 15px;
+    }
+</style>
+
+<div>
+    <br>
+
+    <h1>Tutor Calendar</h1>
+    
+    
+    {% include 'includes/confirm_modal.html' %}
+
+    <!--
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Confirm-Modal">
+        Confirm
+    </button>
+    -->
+
+    <table>
+        <thead>
+        <tr>    
+        <th scope="col"></th>
+        <th scope="col"></th>
+        {% for day in weekdays_and_dates %}
+            <th scope="col" colspan={{ num_attributes }}>{{ day[0] }} , {{ day[1] }}</th>
+        {% endfor %}
+        </tr>
+
+        <tr>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+
+            
+            {% for day in weekdays_and_dates %}
+           
+                {% for attribute in calendar_attributes %}
+                    <th scope="col"> {{ attribute }} </th>
+                {% endfor %}
+
+            {% endfor %}
+        </tr>
+
+        </thead>
+        
+        <tbody>
+        
+            {% for time in times %}
+            <tr>
+            <td>{{ time[0] }}</td>
+            <td>{{ time[1] }}</td>
+            
+                {% for day in weekdays_and_dates %}
+                {% set ns = namespace(session=false) %}
+                
+                {% for data in mock_data %}
+                    {% for key,value in data["Times Available"].items() %}
+                   
+                            {% for time_aval in value %}
+                                {% if day[0] == key and time[0] == time_aval %}
+                                {% set ns.session = true %}
+                                <td>{{ data["Tutor"] }}</td>
+                                <td>{{ data["Tutor Service"] }}</td>
+                                <td>{{ data["Zoom Link"] }}</td>
+                                <td>{{ data["Spaces Available"] }}</td>
+                                <td>Confirm</td>
+                                
+                                {% endif %}  
+                            {% endfor %}  
+                            
+                    {% endfor %}
+                {% endfor %}
+
+                {% if ns.session == false %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                {% endif %}
+
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+
+   
+{% endblock %}

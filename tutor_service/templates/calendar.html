@@ -47,7 +47,7 @@
             <th></th>
             <th></th>
             {% for day in weekdays %}
-            <th scope="col" colspan="5">{{ day }}</th>
+            <th scope="col" colspan={{ num_attributes }}>{{ day }}</th>
             {% endfor %}
             </tr>
         </thead>
@@ -58,8 +58,8 @@
                 
                 {% for day in weekdays %}
                 
-                    {% for col_data in cols_list %}
-                        <th scope="col">{{ col_data }}</th>
+                    {% for attribute in calendar_attributes %}
+                        <th scope="col">{{ attribute }}</th>
                     {% endfor %}
 
                 {% endfor %}
@@ -69,7 +69,7 @@
                 <td>{{ time[0] }}</td>
                 <td>{{ time[1] }}</td>
                 
-                {% for x in total_cols %}
+                {% for x in total_attributes %}
                     {% if time[0] == "10:00AM" %}
                         {% if x == "Tutor" %}
                             <td>John</td>

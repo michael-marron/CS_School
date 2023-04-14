@@ -1,4 +1,4 @@
-<div class="modal fade" id="Confirm-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Confirm-Modal-{{ session.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,13 +8,22 @@
           </button>
         </div>
         <div class="modal-body">
-          
+          <form method="POST">
+            {{ confirm_form.hidden_tag() }}
+            <h4>Are you sure you want to confirm tutoring session at {{ session.times_available }} on {{ session.tutor_service }} with {{ session.tutor }}?</h4>
+            <input id="session_confirmed" name="session_confirmed" type="hidden" value={{ session.id }}>
+            {{ confirm_form.submit(class="btn btn-outline-success btn-block") }}
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
   
+  <!--
+    <input id="session_confirmed" name="session_confirmed" value={{ session.id }}>
+    <h4>{{ times[0] }}</h4>
+    this does work, you do seem to be able to access any variables on the html page that this modal connects to 
+  -->
