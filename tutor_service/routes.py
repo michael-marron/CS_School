@@ -1,25 +1,20 @@
 
 import json
-
+import flask
 from flask import Flask, request, render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
-
 # from tutor_service.tutorFuctions import get_dictionary
-# from tutor_service.tutorFunctions import get_dictionary
-
-
 from flask import render_template, redirect, url_for, flash, session, current_app
-import flask
-from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
 from flask import request, session, redirect, url_for, render_template, flash
-import psycopg2, psycopg2.extras, re
+import psycopg2
+import psycopg2.extras
+import re
 from flask_admin import Admin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from .extensions import mail
+from datetime import timedelta, datetime
 from flask_sqlalchemy import SQLAlchemy
-from datetime import timedelta,datetime
-#from . import app
 
 # connect to local db
 DB_HOST = "localhost"
@@ -27,10 +22,18 @@ DB_NAME = "login"
 DB_USER = "postgres"
 DB_PASS = "000000"
 
+""" DB_HOST = "dpg-cg53dbo2qv287cseev80-a"
+DB_NAME = "csschool_db"
+DB_USER = "csschool_db_user"
+DB_PASS = "yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh" """
+SECRET_KEY = "secret"
 
+#DATABASE_URL = 'postgresql://csschool_db_user:yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh@dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com/csschool_db'
+
+#conn = psycopg2.connect(DATABASE_URL, sslmode='disable', keepalives=1, keepalives_idle=30, keepalives_interval=10, keepalives_count=5)
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 def register():
     # bound to the db during the registration
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -51,7 +54,8 @@ def register():
             password, "pbkdf2:sha256", 64)  # hash password , salt 64 bits
 
         # Check if account exists, use cursor.fetchon to get each row in the table
-        cursor.execute('SELECT * FROM userinfo WHERE email = %s', (email,))  # keep this comma
+        cursor.execute('SELECT * FROM userinfo WHERE email = %s',
+                       (email,))  # keep this comma
         account = cursor.fetchone()
 
         # existing acc
@@ -78,7 +82,7 @@ def register():
 
         else:
             cursor.execute(
-                "INSERT INTO userinfo (email, firstname, lastname, userpassword) VALUES (%s,%s,%s, %s)", (email, fname,lname, hashedpass))
+                "INSERT INTO userinfo (email, firstname, lastname, userpassword) VALUES (%s,%s,%s, %s)", (email, fname, lname, hashedpass))
             conn.commit()
             flash('You have successfully registered!')
             print("added")
@@ -89,36 +93,42 @@ def register():
     return render_template('register.html')
 
 # need to be emplemented, does not work yet
+
+
 def configure_session_expiration():
     session.permanent = True
     current_app.permanent_session_lifetime = timedelta(seconds=5)
-    session['expires_at'] = (datetime.now() + timedelta(seconds=5)).strftime('%Y-%m-%d %H:%M:%S.%f')
+    session['expires_at'] = (
+        datetime.now() + timedelta(seconds=5)).strftime('%Y-%m-%d %H:%M:%S.%f')
 
 # log in-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def login():
-   cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-   query = '''SELECT *
+
+def login():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    query = '''SELECT *
                FROM userinfo
                JOIN userrole
                ON userinfo.userid = userrole.userid
                WHERE userinfo.email = %s
             '''
-   
-   # Check if "username" and "password" POST requests exist (user submitted form)
-   if 'email' in request.form and 'password' in request.form and request.method == 'POST':
+
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if 'email' in request.form and 'password' in request.form and request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
         print("in log in function")
 
         if 'loggedin' in session and 'expires_at' in session:
-           expires_at = datetime.strptime(session['expires_at'], '%Y-%m-%d %H:%M:%S.%f')
-           if datetime.now() > expires_at:
+            expires_at = datetime.strptime(
+                session['expires_at'], '%Y-%m-%d %H:%M:%S.%f')
+            if datetime.now() > expires_at:
                 logout()
                 flash('Your session has expired. Please log in again.')
-           else:
+            else:
                 configure_session_expiration()
-        
+
         cursor.execute(query, (email,))
         account = cursor.fetchone()
 
@@ -135,54 +145,63 @@ def login():
                 session['email'] = account['email']
                 session['role'] = account['userrole']
 
-                if account['userrole']== 'Admin': 
-                    print ('expect Admin, get ', account['userrole'], " email: ", account['email'] )
+                if account['userrole'] == 'Admin':
+                    print('expect Admin, get ',
+                          account['userrole'], " email: ", account['email'])
                     configure_session_expiration()
                     return redirect(url_for('ad_page'))
 
-                elif account['userrole']== 'Tutor': 
-                    print ('expect Tutor, get ', account['userrole']," email: ", account['email'])
+                elif account['userrole'] == 'Tutor':
+                    print('expect Tutor, get ',
+                          account['userrole'], " email: ", account['email'])
                     configure_session_expiration()
-                    return redirect(url_for('tutor_page')) # do not have tutor page in the code, need route to tutor page
-                
+                    # do not have tutor page in the code, need route to tutor page
+                    return redirect(url_for('tutor_page'))
+
                 else:
-                # Redirect to home page
-                    print ('expect student, get ', account['userrole'], ', name: ', account['firstname'], ", email: ", account['email'])
+                    # Redirect to home page
+                    print('expect student, get ', account['userrole'], ', name: ',
+                          account['firstname'], ", email: ", account['email'])
                     configure_session_expiration()
                     return redirect(url_for('calendar_page'))
             else:
-                
+
                 print('in log in _ wrong pass')
                 flash('Incorrect email/password')
         else:
-            print ('in log in page - wrong email')
+            print('in log in page - wrong email')
             flash('Incorrect email/password')
 
-   else:
+    else:
         print("input???")
-   return render_template('login.html')
+    return render_template('login.html')
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 def logout():
 
-    #session.permanent = True
-    #current_app.permanent_session_lifetime = timedelta(seconds=5)
-    
+    # session.permanent = True
+    # current_app.permanent_session_lifetime = timedelta(seconds=5)
+
     session.pop('expires_at', None)
     session.pop('loggedin', None)
     session.pop('id', None)
     session.pop('email', None)
     session.pop('role', None)
-
     session.clear()
-    
+
     session.modified = True
 
     return redirect(url_for('login'))
 
+# not implemented
+
+
 def reset():
     return render_template('reset.html')
+# not implemented
+
 
 def ad_page():
     return render_template('admin.html')
@@ -197,28 +216,31 @@ def calendar_page():
     weekdays = get_weekdays()
     # num_cols_per_day = 5
     cols_list = ["Tutor", "Tutor Service",
-        "Zoom Link", "Spaces Available", "Confirm"]
+                 "Zoom Link", "Spaces Available", "Confirm"]
     total_cols = create_column_list(cols_list, 7)
     # total_cols = len(weekdays) * num_cols_per_day
 
-    # log user out after a certain amount of time 
+    # log user out after a certain amount of time
     logout_after = 60
 
     return render_template('calendar.html', times=times, weekdays=weekdays, total_cols=total_cols, cols_list=cols_list, logout_after=logout_after)
 
 
 def foo():
-  return render_template('mail.html')
+    return render_template('mail.html')
+
 
 def email():
-  msg = Message('Session Scheduled', sender =   'noreply@csschool.io', recipients = ['paul@mailtrap.io'])
-  msg.body = "Hey Paul, your session has been scheduled!"
-  mail.send(msg)
-  return "Message sent!"
-myDictionary = {}
+    msg = Message('Session Scheduled', sender='noreply@csschool.io',
+                  recipients=['paul@mailtrap.io'])
+    msg.body = "Hey Paul, your session has been scheduled!"
+    mail.send(msg)
+    return "Message sent!"
+
 
 def home_page():
     return render_template('home.html')
+
 
 def calendar_page():
     total_cols = 28
@@ -227,7 +249,10 @@ def calendar_page():
     return render_template('calendar.html', times=times, weekdays=weekdays, total_cols=total_cols)
 
 
-#--------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------
+myDictionary = {}
+
+
 def tutor_page():
 
     logout_after = 60
@@ -235,7 +260,8 @@ def tutor_page():
     print("Hello!!")
     total_cols = 7
     times = get_time_list(8, 21)
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    weekdays = ["Monday", "Tuesday", "Wednesday",
+                "Thursday", "Friday", "Saturday", "Sunday"]
     if request.method == 'POST':
         finalResult = get_dictionary()
         # print("post request")
@@ -244,19 +270,18 @@ def tutor_page():
     return render_template('tutorPage.html', times=times, weekdays=weekdays, total_cols=total_cols, logout_after=logout_after)
 
 
-# @app.route('/my_function')
 def add_to_dictionary(entire):
-    #get data that was sent in tutorHelp.js
+    # get data that was sent in tutorHelp.js
     req = json.loads(request.get_data())
     temp = req
-    #split the string into 2 parts: day and time
+    # split the string into 2 parts: day and time
     split_string = temp.split(" ", 1)
-    #key = day
+    # key = day
     key = split_string[0]
-    #value = time
+    # value = time
     value = split_string[1]
 
-    #check if the key is in the dictionary
+    # check if the key is in the dictionary
     if key not in myDictionary.keys():
         myDictionary[key] = value
     elif type(myDictionary[key]) == list:
@@ -264,8 +289,7 @@ def add_to_dictionary(entire):
     else:
         myDictionary[key] = [myDictionary[key], value]
 
-    #debug statement to see format of dictionary
-    #print(myDictionary)
+    # print(myDictionary)
     return ('/')
 
 
@@ -276,25 +300,24 @@ def remove_from_dictionary(entire):
     key = split_string[0]
     value = split_string[1]
 
-    k = myDictionary.get(key,None) # returns None if key not found
-    if isinstance(k,list) and k: # this is a list, and not empty
+    k = myDictionary.get(key, None)  # returns None if key not found
+    if isinstance(k, list) and k:  # this is a list, and not empty
         v = k.index(value)
         myDictionary[key].pop(v)
     else:
         # error message
-        print("Warning: could not find ", key ," in dictionary")
+        print("Warning: could not find ", key, " in dictionary")
 
-    #debug statements to see what is being deleted from dictionary
-    #print("trying to delete ", req)
-    #print(myDictionary)
+    # debug statements to see what is being deleted from dictionary
+    # print("trying to delete ", req)
+    # print(myDictionary)
     return ('/')
+
+
 def get_dictionary():
-    #debug statement to see contents of dictionary
+    # debug statement to see contents of dictionary
     # if request.method == 'POST':
     #     result = request.form
     # print("result: ", result)
     print(myDictionary)
     return myDictionary
-
-
-
