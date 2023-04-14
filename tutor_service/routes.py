@@ -227,10 +227,7 @@ def calendar_page():
     return render_template('calendar.html', times=times, weekdays=weekdays, total_cols=total_cols)
 
 
-def test_page():
-    return render_template('home.html')
-
-
+#--------------------------------------------------------------------------------------------------------------------------------
 def tutor_page():
     print("Hello!!")
     total_cols = 7
