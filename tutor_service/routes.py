@@ -1,34 +1,37 @@
 
 import json
-
+import flask
 from flask import Flask, request, render_template, redirect, url_for, flash
 from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
-
 # from tutor_service.tutorFuctions import get_dictionary
-# from tutor_service.tutorFunctions import get_dictionary
-
-
 from flask import render_template, redirect, url_for, flash, session, current_app
-import flask
-from tutor_service.helper_functions import get_time_list, get_weekdays, get_columns, create_column_list
 from flask import request, session, redirect, url_for, render_template, flash
 import psycopg2, psycopg2.extras, re
 from flask_admin import Admin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from .extensions import mail
-from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta,datetime
-#from . import app
+from flask_sqlalchemy import SQLAlchemy
+#from tutor_service import db
+
 
 # connect to local db
-DB_HOST = "localhost"
+""" DB_HOST = "localhost"
 DB_NAME = "login"
 DB_USER = "postgres"
-DB_PASS = "000000"
+DB_PASS = "000000" """
 
+""" DB_HOST = "dpg-cg53dbo2qv287cseev80-a"
+DB_NAME = "csschool_db"
+DB_USER = "csschool_db_user"
+DB_PASS = "yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh" """
+SECRET_KEY= "secret"
 
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
+DATABASE_URL='postgresql://csschool_db_user:yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh@dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com/csschool_db'
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+#conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def register():
@@ -174,16 +177,16 @@ def logout():
     session.pop('id', None)
     session.pop('email', None)
     session.pop('role', None)
-
     session.clear()
     
     session.modified = True
 
     return redirect(url_for('login'))
 
+# not implemented
 def reset():
     return render_template('reset.html')
-
+# not implemented
 def ad_page():
     return render_template('admin.html')
 
@@ -215,7 +218,7 @@ def email():
   msg.body = "Hey Paul, your session has been scheduled!"
   mail.send(msg)
   return "Message sent!"
-myDictionary = {}
+
 
 def home_page():
     return render_template('home.html')
@@ -226,8 +229,9 @@ def calendar_page():
     weekdays = get_weekdays()
     return render_template('calendar.html', times=times, weekdays=weekdays, total_cols=total_cols)
 
-
 #--------------------------------------------------------------------------------------------------------------------------------
+myDictionary = {}
+
 def tutor_page():
 
     logout_after = 60
@@ -243,8 +247,6 @@ def tutor_page():
         print("bye")
     return render_template('tutorPage.html', times=times, weekdays=weekdays, total_cols=total_cols, logout_after=logout_after)
 
-
-# @app.route('/my_function')
 def add_to_dictionary(entire):
     #get data that was sent in tutorHelp.js
     req = json.loads(request.get_data())
@@ -264,7 +266,6 @@ def add_to_dictionary(entire):
     else:
         myDictionary[key] = [myDictionary[key], value]
 
-    #debug statement to see format of dictionary
     #print(myDictionary)
     return ('/')
 
