@@ -125,20 +125,7 @@ def test_valid_signup(client_db, app):
         assert User.query.count() == 1
         assert User.query.first().username == "GarySpivey"
 
-def test_valid_signup(client_db):
-    '''
-    GIVEN that app is running with context
-    WHEN a user signs up
-    THEN a confirmation email should be sent
-    '''
-    '''
-    Navigate to sign up page
-    create a new account.
-    Check that the confirmation email is sent (POST 200)
-    '''
-    pass
-
-def test_login_new_user():
+def test_login_new_user(client_db, app):
     '''
     GIVEN that database is empty
     WHEN that user logs in
@@ -177,19 +164,22 @@ def	test_book_success(student_login, app):
         assert Sessions.query.count() == 1
         assert Sessions.query.first().id == 1234
 
-def	test_join_success(student_login):
+def	test_join_success(student_login, app):
     '''
     GIVEN a session is scheduled but not full
     WHEN a user joins that session
     THEN the database is updated
     '''
+
     '''
-    Select the existing session on the user dashboard
-    navigate to join session page
-    join session
-    Database should be updated.
+    This test should join a session 1235 where the session is scheduled but not full
+    The previous test creates a new session
     '''
-    pass
+    
+    response = student_login.post("/schedule/confirm", data = {"id": 1235})
+    
+    with app.app_context():
+        assert Sessions.query.first().num_students == 2
 
 def	test_join_success_message(student_login):
     '''
@@ -197,12 +187,9 @@ def	test_join_success_message(student_login):
     WHEN a user schedules a new session
     THEN a confirmation message is displayed
     '''
-    '''
-    Navigate to user dashboard
-    schedule a new session. 
-    test that a confirmation message should be displayed (response data)
-    '''
-    pass
+
+    response = student_login.post("/schedule", data = {"id": 1234})
+    assert b"Session Scheduled" in response.data
 
 def	test_join_success_email(student_login):
     '''
@@ -210,12 +197,10 @@ def	test_join_success_email(student_login):
     WHEN a user schedules a new session
     THEN a confirmation message is displayed
     '''
-    '''
-    Navigate to user dashboard
-    schedule a new session. 
-    test that a confirmation email should be sent (POST 200)
-    '''
-    pass
+    student_login.post("/schedule", data = {"id": 1234})
+    response = student_login.post("/schedule/email", data = {"id": 1234})
+    assert response.status_code == 200
+
 
 def	test_book_fail(student_login, app):
     '''
@@ -223,14 +208,11 @@ def	test_book_fail(student_login, app):
     WHEN that student tries to schedule a new session
     THEN the student cannot schedule a new session and an error message is returned
     '''
-    
-    '''
-    App must be created with context.
-    Add two sessions to DB
-    Schedule one more session. 
-    Third session should fail and error message should be displayed.
-    '''
-    pass
+
+    student_login.post("/schedule/confirm", data = {"id": 1234})
+    student_login.post("/schedule/confirm", data = {"id": 1235})
+    response = student_login.post("/schedule/confirm", data = {"id": 1236})
+    assert b"Oops! Too many sessions scheduled!" in response.data
 
 def	test_join_fail(student_login):
     '''
@@ -238,12 +220,14 @@ def	test_join_fail(student_login):
     WHEN a student tries to join session
     THEN then error message is displayed
     '''
+
     '''
-    Navigate to join session page for full session
-    attempt to join. 
-    Should fail with error message
+    Here we are assuming that session 1237 has been scheduled and is full
     '''
-    pass
+    
+    student_login.post("/schedule/confirm", data = {"id": 1237})
+    assert b"Oops! That session is full!" in response.data
+
 
 # 8. Test cancel a session
 def	test_cancel_success(student_login, app):
@@ -377,18 +361,7 @@ def	test_change_shifts(tutor_login):
     '''
     pass
 
-def	test_refresh_selection(tutor_login):
-    '''
-    GIVEN
-    WHEN
-    THEN
-    '''
-    '''
-    On the schedule page, create a schedule.
-    Hit the reresh button.
-    Scheduel should be cleared.
-    '''
-    pass
+
 
 # 12. Test session info
 def	test_view_session_info_tutor(tutor_login):
@@ -406,11 +379,8 @@ def	test_view_session_info_student(student_login):
     WHEN the student clicks on that session from dashboard
     THEN session info is displayed
     '''
-    '''
-    Navigate to session info page.
-    Response data should show expected results
-    '''
-    pass
+    response = student_login.get("/session/info", data = {"id": 1234})
+    assert b"Time:" in response.data
 
 # 13. Test logout
 def	test_login_required(client):
@@ -441,79 +411,3 @@ def	test_tutor_logout(tutor_login):
     tutor_login.post("/logout")
     response = tutor_login.get("/calendar")
     assert response.status_code == 401
-
-# 14. Test UI
-def	test_UI_unavailable_is_gray(student_login):
-    '''
-    GIVEN that a session is not available
-    WHEN a student views the dashboard
-    THEN that session is colored gray
-    '''
-    '''
-    App must be created with context including tutor schedules
-    Check that unavailable time slots are gray.
-    '''
-    pass
-
-def	test_UI_available_is_white(student_login):
-    '''
-    GIVEN that a session is not scheduled but is available
-    WHEN a student views the dashboard
-    THEN that session is colored white
-    '''
-    '''
-    App must be created with context including tutor schedules
-    Check that available time slots are white.
-    '''
-    pass
-
-def	test_UI_scheduled_is_orange_student(tutor_login):
-    '''
-    GIVEN that s session is scheduled
-    WHEN a tutor views the dashboard
-    THEN that session is colored orange
-    '''
-    '''
-    App must be created with context including tutor schedules and a booked session
-    Check that booked time slots are orange.
-    '''
-    pass
-
-def	test_UI_available_is_orange(student_login):
-    '''
-    GIVEN that a session is scheduled, but is not full
-    WHEN a student views the dashboard
-    THEN that session is colored orange
-    '''
-    '''
-    App must be created with context including tutor schedules and a booked session that allows multiple students
-    Check that time slots already booked (but not full) are orange.
-    '''
-    pass
-
-def	test_view_available_tutors(student_login):
-    '''
-    GIVEN that the app is running with context
-    WHEN a student views the calendar page
-    THEN a list of tutors is displayed
-    '''
-    '''
-    Navigate to dashboard
-    and query response data for expected drop down list.
-    '''
-    pass
-
-def	test_calendar_dynamic(student_login):
-    '''
-    GIVEN that a tutor is selected on the calendar page
-    WHEN a student selects a different tutor
-    THEN the calendar changes accordingly
-    '''
-    '''
-    Calendar changes in response to tutor being selected.
-    Navigate to dashboard
-    query response data for expected drop down list.
-    Select a different tutor
-    see if the calendar changed.
-    '''
-    pass
