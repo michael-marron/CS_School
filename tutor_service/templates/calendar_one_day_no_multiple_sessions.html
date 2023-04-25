@@ -5,9 +5,10 @@
 {% endblock %}
 
 <!--
-    Table Row (tr)
-    Table Data (td), the content of the table cell
-    Table Header (th), text in th elements are bold and centered by default
+    Calendar with one day (for simplicity) and multiple tutor sessions but the tutor sessions have to be at unique times. 
+    This calendar does not account for if there are multiple tutor sessions at the same time. 
+    Calendar adds color scheme. Gray for no tutor session, red for booked tutor session, white for tutor session with spaces available. 
+    Drop down menu for specific tutor selection added. 
 -->
 
 {% block body %}
@@ -69,19 +70,9 @@
         <tbody>
         
             {% for time in times %}
-
-            {% if times_dictionary[time[0]] > 1 %}
-                {% for mul_times in range(times_dictionary[time[0]]) %}
-                    <tr>
-                    <td>{{ time[0] }}</td>
-                    <td>{{ time[1] }}</td>
-                {% endfor %}
-            {% else %}
                 <tr>
                 <td>{{ time[0] }}</td>
                 <td>{{ time[1] }}</td>
-            {% endif %}
-           
 
             {% set ns = namespace(session=false) %}
             

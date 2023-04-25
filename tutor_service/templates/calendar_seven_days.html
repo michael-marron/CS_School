@@ -5,9 +5,8 @@
 {% endblock %}
 
 <!--
-    Table Row (tr)
-    Table Data (td), the content of the table cell
-    Table Header (th), text in th elements are bold and centered by default
+    Calendar with seven days and multiple tutor sessions but the tutor sessions have to be at unique times. 
+    This calendar does not account for if there are multiple tutor sessions at the same time. 
 -->
 
 {% block body %}
@@ -69,35 +68,36 @@
             <tr>
             <td>{{ time[0] }}</td>
             <td>{{ time[1] }}</td>
+            
                 {% for day in weekdays_and_dates %}
-                    {% if day[0] == "Monday" or day[0] == "Wednesday" %}
-                        {% if time[0] == "10:00AM" %}
-                        
-                            <td>John</td>
-                            
-                            <td>Computer Science</td>            
-                        
-                            <td>https:zoom.com</td>
-                    
-                            <td>2/3</td>
+                {% set ns = namespace(session=false) %}
                 
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Confirm-Modal">
-                                Confirm
-                            </button></td>
-                        {% else %}
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        {% endif %}    
-                    {% else %}
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    {% endif %}
+                {% for data in mock_data %}
+                    {% for key,value in data["Times Available"].items() %}
+                   
+                            {% for time_aval in value %}
+                                {% if day[0] == key and time[0] == time_aval %}
+                                {% set ns.session = true %}
+                                <td>{{ data["Tutor"] }}</td>
+                                <td>{{ data["Tutor Service"] }}</td>
+                                <td>{{ data["Zoom Link"] }}</td>
+                                <td>{{ data["Spaces Available"] }}</td>
+                                <td><button type="button" class="btn btn-primary" data-toggle="modal" 
+                                    data-target="#Confirm-Modal-{{ session.id }}">Confirm</button></td>
+                                
+                                {% endif %}  
+                            {% endfor %}  
+                            
+                    {% endfor %}
+                {% endfor %}
+
+                {% if ns.session == false %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                {% endif %}
 
                 {% endfor %}
                 </tr>
