@@ -1,0 +1,11 @@
+Some helpful resources
+
+    Test Plan:
+    https://docs.google.com/spreadsheets/d/1KkEiaTvyr7c6WgSsP73zfe0FAzWXqZnS7k0xIMBK0iA/edit?usp=sharing
+
+    Using Pytest with Flask:
+    https://www.youtube.com/watch?v=RLKW7ZMJOf4
+    https://www.youtube.com/watch?v=YbpKMIUjvK8
+
+    Using Selenium with Python:
+    https://www.lambdatest.com/blog/getting-started-with-selenium-python/

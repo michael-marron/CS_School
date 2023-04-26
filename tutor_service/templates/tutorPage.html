@@ -1,0 +1,130 @@
+<html>
+<script type = "text/javascript" src="tutorHelp.js"></script>
+
+{% extends 'base.html'%}
+
+{% block head %}
+Tutor Page
+{% endblock %}
+<link rel="stylesheet" href="style/tutorPage.css">
+{% include 'tutorHelp.js' %}
+{% include 'includes/confirm_modal.html' %}
+
+
+<!--
+    Table Row (tr)
+    Table Data (td), the content of the table cell
+    Table Header (th), text in th elements are bold and centered by default
+-->
+
+{% block body %}
+
+<style>
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    align-content: center;
+    background-color: white;
+  }
+  #schedule{
+    background: white;
+  }
+
+  td, th {
+    padding: 20px;
+  }
+  .popup {
+    position: relative;
+    display: inline-block;
+  }
+
+  .popup .popuptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  .popup .show {
+    visibility: visible;
+    animation: fadeIn 1s
+  }
+
+
+</style>
+
+<h1>Tutor Schedule</h1>
+<form action= "/get_dictionary" method = "POST">
+  <div class = "form-group">
+        <div class = "popup" >
+<!--            <input type="hidden" class= "form-control" name ="dataCell" > onclick="getDictionary()"-->
+<!--            <input type= "button" value= "Save Schedule" name = "save" />-->
+            <button name="saveSchedule" type="submit">Save Schedule</button>
+          <span class="popuptext" id="myPopup">Schedule saved!</span>
+        </div>
+  </div>
+</form>
+<button onclick="refreshBackground()">Refresh Schedule</button>
+
+<div id = "tableSchedule">
+
+  <table id ="schedule">
+    <thead>
+    <tr>
+      <!--
+  <th scope="col" rowspan="2">Start Time</th>
+  <th scope="col" rowspan="2">End Time</th>
+      -->
+      <th></th>
+      <th></th>
+      {% for day in weekdays %}
+      <th id = "weekday" scope="col" colspan="1">{{ day }}</th>
+      {% endfor %}
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="col">Start Time</th>
+      <th scope="col">End Time</th>
+
+      {% for day in weekdays %}
+
+      <th scope="col">Available</th>
+
+      {% endfor %}
+    </tr>
+    {% for time in times %}
+
+    <tr>
+      <td class = "start" >{{ time[0] }}</td>
+      <td class = "end" >{{ time[1] }}</td>
+
+        {% for x in range(total_cols) %}
+              <td class = "data" onclick = "changeColor('springgreen')"></td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+  {% if logout_after %}
+  <script>
+      setTimeout(function () {
+          window.location.href = "{{ url_for('logout') }}";}, {{ logout_after * 1000}});
+  </script>
+  {% endif %}
+
+</div>
+
+
+{% endblock %}
+</html>
