@@ -12,7 +12,7 @@ def get_time_list(start, end):
         start_end_time = []
 
         for count in range(2):
-            if x <= 12:
+            if x < 12:
                 val = x
                 if count == 0:
                     start_time = f"{val}:00AM"
@@ -23,7 +23,11 @@ def get_time_list(start, end):
                     end_time = f"{val}:55AM"
 
             else:
-                val = x - 12
+                if x != 12:
+                    val = x - 12
+                else: 
+                    val = 12
+                        
                 if count == 0:
                     start_time = f"{val}:00PM"
                     end_time = f"{val}:25PM"
@@ -41,25 +45,40 @@ def get_time_list(start, end):
     return list_times
 
 
+
 def get_weekdays():
-    # d = datetime.date.today()
+    d = date.today()
     dates_list = []
 
     for x in range(7):
+        day_and_date = []
         d = date.today() + timedelta(days=x)
         d_format = d.strftime("%m/%d/%y")
         day_name = calendar.day_name[d.weekday()]
-        day_string = f"{day_name}, {d_format}"
-        dates_list.append(day_string)
+        #day_string = f"{day_name}, {d_format}"
+        day_and_date.append(day_name)
+        day_and_date.append(d_format)
+        dates_list.append(day_and_date)
 
-    return dates_list    
+    return dates_list
+
+def get_weekday():
+    day_and_date_list = []
+    day_and_date = []
+    d = date.today()
+    d_format = d.strftime("%m/%d/%y")
+    day_name = calendar.day_name[d.weekday()]
+    day_and_date.append(day_name)
+    day_and_date.append(d_format)
+    day_and_date_list.append(day_and_date)
+    return day_and_date_list
 
 def get_columns(*args):
     col_list = []
     for x in args:
         col_list.append(x)
-
-    return col_list
+    
+    return col_list    
 
 def create_column_list(col_list, num_days):
     all_cols_list = []
@@ -67,4 +86,4 @@ def create_column_list(col_list, num_days):
         for y in col_list:
             all_cols_list.append(y)
 
-    return all_cols_list
+    return all_cols_list        
