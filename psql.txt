@@ -1,0 +1,45 @@
+CREATE TABLE UserInfo
+(
+UserID INT GENERATED ALWAYS AS IDENTITY, --Primary key
+UserRoleID INT NULL, --key to the table UserRole, can be NULL if there is no UserRole record yet
+UFID VARCHAR(50), --The name used by the user to login in the system, update VARCHAR size to what the website allows
+FirstName VARCHAR(200), --update VARCHAR size to what the website allows
+LastName VARCHAR(100), --update VARCHAR size to what the website allows
+Email VARCHAR(200), --update VARCHAR size to what the website allows
+UserPassword VARCHAR(300), --update VARCHAR size to what the website allows
+ActiveFlag INT NOT NULL DEFAULT 1,--Can be used to make the user inactive instead of deleting the record
+CreateDt TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,--When the record was created in the table
+ModifyDt TIMESTAMP NULL--When the record was modified in the table
+)
+
+CREATE TABLE UserRole
+(
+UserRoleID INT GENERATED ALWAYS AS IDENTITY, --Primary key
+UserID INT NOT NULL, --Foreign key to the table UserInfo, if we add a FK constraint then you would not be able to add a record to table UserRole until there is a record in table UserInfo
+UserRole VARCHAR(50) NOT NULL, --Possible values are: Student, Tutor, Admin
+StartDt TIMESTAMP NULL, --When the UserRole was first applicable to the UserID
+EndDt TIMESTAMP NULL DEFAULT ('9999-12-31 00:00:00.000'), --When the UserRole stopped being applicable to the UserID
+CreateDt TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,--When the record was created in the table
+ModifyDt TIMESTAMP NULL--When the record was modified in the table
+)
+
+
+CREATE TABLE TutoringSession
+(
+TutoringSessionID INT GENERATED ALWAYS AS IDENTITY, --Primary key
+TutorUserID INT NULL,
+TutoringSessionDate DATE NULL,
+TutoringSessionStartTime TIME NULL,
+TutoringSessionEndTime TIME NULL,
+TutoringSessionStatus VARCHAR(15) NULL --possible values are 'Available', 'Not Available', 'Booked'
+)
+
+
+--this table can store tutoring session booking info for any available sessions from the table #TutoringSession
+CREATE TABLE TutoringSessionBooking
+(
+TutoringSessionBookingID INT GENERATED ALWAYS AS IDENTITY, --Primary key
+TutoringSessionID INT, 
+StudentUserID INT NULL,
+TutoringSessionTopic VARCHAR(200) NULL --subject or topic of the tutoring session entered by Student, e.g. "Arrays"
+)
