@@ -203,15 +203,15 @@ def test_page():
 
 
 # connect to local db
-DB_HOST = "localhost"
-DB_NAME = "login"
-DB_USER = "postgres"
-DB_PASS = "000000"
+# DB_HOST = "localhost"
+# DB_NAME = "login"
+# DB_USER = "postgres"
+# DB_PASS = "000000"
 
-""" DB_HOST = "dpg-cg53dbo2qv287cseev80-a"
+DB_HOST = "dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com"
 DB_NAME = "csschool_db"
 DB_USER = "csschool_db_user"
-DB_PASS = "yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh" """
+DB_PASS = "yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh"
 SECRET_KEY = "secret"
 
 #DATABASE_URL = 'postgresql://csschool_db_user:yjDUamhvkOQqnai5zIZ8ySMCGkbMUOkh@dpg-cg53dbo2qv287cseev80-a.ohio-postgres.render.com/csschool_db'
